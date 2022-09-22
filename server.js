@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const Sequelize = require("sequelize");
-const rt = require("./routes");
 const db = require("./models");
 
 // enable express to do Cross-origin resource sharing
@@ -29,9 +28,17 @@ db.sequelize.sync().then(() => {
     console.log("Failed to sync the db: ", error.message);
 })
 
+// routes
+const authR = require('./routes/auth');
+const userR= require('./routes/users');
 
+app.use("/api/auth",authR);
+app.use("/api/user",userR);
 
-app.get('/', (req, res) => res.send("hello world"));
+// simple route
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to bezkoder application." });
+});
 
 // app port
 app.listen(3000, () => {

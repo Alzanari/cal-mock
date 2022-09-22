@@ -15,28 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Event.init({
-    title: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    comment: {
-      type: DataTypes.STRING
-    },
-    status: {
-      allowNull: false,
-      type: DataTypes.ENUM('pending','validated', 'rejected'),
-      defaultValue: 'pending'
-    },
-    userId: {
-      type: DataTypes.INTEGER
-    }
+    title: DataTypes.STRING,
+    comment: DataTypes.STRING,
+    status: DataTypes.ENUM('pending','validated', 'rejected')
   }, {
     sequelize,
     modelName: 'Event',
-    tableName:'event',
-    timestamps: true,
-    underscored: true,
-    freezeTableName:true
   });
   return Event;
 };

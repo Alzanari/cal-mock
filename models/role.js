@@ -15,17 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Role.init({
-    name: {
-      type: DataTypes.ENUM('pending', 'validated', 'rejected'),
-      defaultValue: 'pending'
-    }
+    name: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Role',
-    tableName:'role',
-    timestamps: true,
-    underscored: true,
-    freezeTableName:true
+    timestamps: false
   });
   return Role;
 };
