@@ -131,3 +131,4 @@ dist
 
 .eslintrc.js
 client/src/components/test.html
+config/mail.js

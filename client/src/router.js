@@ -9,7 +9,7 @@ const ListAdm = () => import("./components/listAdm.vue")
 const routes = [
   {
     path: "/",
-    name: "home",
+    name: "calendar",
     component: Calendar,
   },
   {
