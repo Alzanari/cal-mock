@@ -1,5 +1,4 @@
 const db = require("../models");
-const config = require("../config/auth");
 const Event = db.Event;
 
 const createEvent = async (req, res) => {
@@ -7,7 +6,6 @@ const createEvent = async (req, res) => {
         const event = await Event.create({
             title: req.body.title,
             comment: req.body.comment,
-            date: req.body.date
         });
         res.status(200).send({
             message: "event created successfully",
@@ -60,7 +58,6 @@ const updateEvent = async (req, res) => {
         const event = await Event.update({
             title: req.body.title,
             comment: req.body.comment,
-            date: req.body.date,
             status: req.body.status
         });
         res.status(200).send({
