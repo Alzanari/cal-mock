@@ -3,8 +3,9 @@
     <div class="card card-container">
       <img
         id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+        src="../assets/images/login2.jpg"
         class="profile-img-card"
+        width="250"
       />
       <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-group">

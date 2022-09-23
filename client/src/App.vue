@@ -1,5 +1,7 @@
 <template>
-  <h1>hello</h1>
+  <div class="container-fluid">
+    <router-view/>
+  </div>
 </template>
 
 <script>

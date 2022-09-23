@@ -1,7 +1,7 @@
 <template>
-    <Header />
-    <Side />
     <div>
+        <Header />
+        <Side />
         this is calendar
     </div>
 </template>
