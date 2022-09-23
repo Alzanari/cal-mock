@@ -4,6 +4,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const Sequelize = require("sequelize");
 const db = require("./models");
+const cron = require("node-cron");
+
 
 // enable express to do Cross-origin resource sharing
 app.use(cors());
@@ -37,10 +39,14 @@ app.use("/api/auth",authR);
 app.use("/api/user",userR);
 app.use("/api/event",eventR);
 
-// simple route
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to bezkoder application." });
-});
+// Schedule mail delivery everyday at 10:00 am (0 10 * * *)
+// const mailJob = new cron.schedule(' 0 10 * * *', () => {
+//     console.log('cron run every minute');
+// });
+// mailJob.start();
+
+// check model object magic methods
+// console.log(Object.keys(db.User.prototype));
 
 // app port
 app.listen(3000, () => {
