@@ -1,0 +1,85 @@
+
+
+
+nav {
+    background: #5630c3;
+    color: aliceblue;
+}
+
+.navbar-light .navbar-brand {
+    color: white !important;
+}
+
+.btn-login {
+    border-radius: 24px !important;
+    background: #3c2287 !important;
+}
+
+.btn-group > .btn:not(:last-child):not(.dropdown-toggle), .btn-group > .btn-group:not(:last-child) > .btn {
+    background: linear-gradient(#b42df4, #5a30c5) !important;
+}
+
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    background: linear-gradient(#b42df4, #5a30c5) !important;
+
+}
+
+.btn-group > .btn:not(:first-child), .btn-group > .btn-group:not(:first-child) {
+    background: linear-gradient(#b42df4, #5a30c5) !important;
+}
+
+.fc-widget-header {
+    background-color: blue !important;
+}
+
+.search-header {
+    background: linear-gradient(#5427c8, #b037e7) !important;
+    color: white;
+}
+
+.btn-dlt {
+    background: linear-gradient(#ff8326, #fa4947) !important;
+    color: white;
+    border-radius: 24px !important;
+}
+
+.btn-search {
+    background: linear-gradient(#56eeb2, #0da0f1) !important;
+    color: white;
+    border-radius: 24px !important;
+}
+
+.btn-add {
+    background: linear-gradient(#f8b477, #ff414c) !important;
+    color: white;
+    border-radius: 24px !important;
+}
+
+.fc-widget-header {
+    background-color: blue !important;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+    padding: 30px;
+    background: linear-gradient(#b42df4, #5a30c5) !important;
+    height: 80px;
+
+}
+
+.fc .fc-toolbar-title {
+    color: white !important;
+}
+
+.page-link {
+    background: linear-gradient(#f8b477, #ff414c) !important;
+}
+
+.modal-add {
+    background: linear-gradient(#b42df4, #5a30c5) !important;
+}
+@media only screen and (max-width: 600px) {
+    body {
+        background-colr: lightblue !important;
+    }
+}
+
