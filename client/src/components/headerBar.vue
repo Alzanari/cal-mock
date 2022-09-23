@@ -3,20 +3,11 @@
     <nav class="navbar navbar-expand navbar-dark bg-dark">
       <a href="/" class="navbar-brand">Task App</a>
 
-      <div v-if="!currentUser" class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <router-link to="/login" class="nav-link">
-            <font-awesome-icon icon="sign-in-alt" /> Login
-          </router-link>
-        </li>
-      </div>
 
-      <div v-if="currentUser" class="navbar-nav ml-auto">
+      <div class="navbar-nav ml-auto">
         <li class="nav-item">
-          <router-link to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
             {{ currentUser.username }}
-          </router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" @click.prevent="logOut">
