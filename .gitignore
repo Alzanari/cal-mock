@@ -130,3 +130,4 @@ dist
 .pnp.*
 
 .eslintrc.js
+client/src/components/test.html
