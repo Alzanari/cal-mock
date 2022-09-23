@@ -1,34 +1,9 @@
-import axios from 'axios';
+export default function authHeader() {
+  let user = JSON.parse(localStorage.getItem('user'));
 
-const API_URL = 'http://localhost:3000/api/auth';
-
-class AuthService {
-  login(user) {
-    return axios
-      .post(API_URL + '/signin', {
-        username: user.username,
-        password: user.password
-      })
-      .then(response => {
-        if (response.data.accessToken) {
-          localStorage.setItem('user', JSON.stringify(response.data));
-        }
-
-        return response.data;
-      });
-  }
-
-  logout() {
-    localStorage.removeItem('user');
-  }
-
-  register(user) {
-    return axios.post(API_URL + '/signup', {
-      username: user.username,
-      email: user.email,
-      password: user.password
-    });
+  if (user && user.accessToken) {
+    return { 'x-access-token': user.accessToken };
+  } else {
+    return {};
   }
 }
-
-export default new AuthService();
