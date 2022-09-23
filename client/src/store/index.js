@@ -1,15 +1,10 @@
-import Vuex from 'vuex';
-import Vue from 'vue';
-import auth from './modules/auth';
-import events from './modules/events';
-import users from './modules/users';
+import { createStore } from "vuex";
+import { auth } from "./auth.module";
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
-    modules:{
-        auth,
-        events,
-        users
-    }
+const store = createStore({
+  modules: {
+    auth,
+  },
 });
+
+export default store;
