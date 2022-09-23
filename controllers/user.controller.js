@@ -39,9 +39,9 @@ const getAllUser = async (req, res) => {
 const updateUser = async (req, res) => {
     try {
         const user = await User.update({
-            title: req.body.title,
-            comment: req.body.comment,
-            date: req.body.date,
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password
         });
         res.status(200).send({
             message: "User updated successfully",
@@ -59,7 +59,7 @@ const deleteUser = async (req, res) => {
     try {
         const user = await User.destroy({
             where: {
-                id: id
+                id: req.body.id
             }
         });
         res.status(200).send({

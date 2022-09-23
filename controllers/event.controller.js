@@ -7,7 +7,7 @@ const createEvent = async (req, res) => {
         const event = await Event.create({
             title: req.body.title,
             comment: req.body.comment,
-            date: req.body.date,
+            date: req.body.date
         });
         res.status(200).send({
             message: "event created successfully",
@@ -61,6 +61,7 @@ const updateEvent = async (req, res) => {
             title: req.body.title,
             comment: req.body.comment,
             date: req.body.date,
+            status: req.body.status
         });
         res.status(200).send({
             message: "event updated successfully",
@@ -78,7 +79,7 @@ const deleteEvent = async (req, res) => {
     try {
         const event = await Event.destroy({
             where: {
-                id: id
+                id: req.body.id
             }
         });
         res.status(200).send({

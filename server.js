@@ -31,9 +31,11 @@ db.sequelize.sync().then(() => {
 // routes
 const authR = require('./routes/auth');
 const userR= require('./routes/users');
+const eventR= require('./routes/event');
 
 app.use("/api/auth",authR);
 app.use("/api/user",userR);
+app.use("/api/event",eventR);
 
 // simple route
 app.get("/", (req, res) => {
