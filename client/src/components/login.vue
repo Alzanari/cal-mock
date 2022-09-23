@@ -6,7 +6,7 @@
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         class="profile-img-card"
       />
-      <form @submit="handleLogin" :validation-schema="schema">
+      <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-group">
           <label for="username">Username</label>
           <Field name="username" type="text" class="form-control" />
@@ -33,7 +33,7 @@
             {{ message }}
           </div>
         </div>
-      </form>
+      </Form>
     </div>
   </div>
 </template>
@@ -95,5 +95,4 @@ export default {
 </script>
 
 <style scoped>
-...
 </style>
