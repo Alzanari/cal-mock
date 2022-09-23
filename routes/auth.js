@@ -1,12 +1,15 @@
 const { Router } = require('express');
 const router = Router();
-const { verifySignUp } = require("../middleware");
+const { verifySignUp, authJwt } = require("../middleware");
 const controller = require("../controllers/auth.controller");
+const auth = require('../config/auth');
 
-router.post("/signup", [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted], controller.signup); 
+// for admin to create a user
+router.post("/signup", [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted, authJwt.verifyToken, authJwt.isAdmin], controller.signup); 
 
+// for user to sign in and refresh his token
 router.post("/signin", controller.signin);
 
-router.post("/refreshtoken", controller.refreshToken);
+router.post("/refreshtoken", [authJwt.verifyToken], controller.refreshToken);
 
 module.exports = router;

@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const router = Router();
 const { authJwt } = require("../middleware");
-const controller = require("../controllers/auth.controller");
+const controller = require("../controllers/user.controller");
 
-router.post("/all", (req, res) => {controller.allAccess});
+router.get("all", [authJwt.verifyToken, authJwt.isAdmin], controller.getAllUser);
 
-router.post("/user", [authJwt.verifyToken], (req, res) => {controller.userBoard});
+router.post("/find", [authJwt.verifyToken, authJwt.isAdmin], controller.getUser);
 
-router.post("/admin", [authJwt.verifyToken, authJwt.isAdmin], (req, res) => {controller.adminBoard});
+router.put("/update", [authJwt.verifyToken, authJwt.isAdmin], controller.updateUser);
+
+router.delete("/delete", [authJwt.verifyToken, authJwt.isAdmin], controller.deleteUser);
 
 module.exports = router;
