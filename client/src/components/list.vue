@@ -1,14 +1,13 @@
 <template>
-  <h1>hello</h1>
+    <h1>this is a list</h1>
 </template>
 
 <script>
 
 export default {
-  name: 'App'
+    name:'list',
 }
 </script>
 
 <style>
-}
 </style>
