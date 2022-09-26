@@ -1,89 +1,79 @@
 <template>
-    <div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem">
-    <a
-        href="/"
-        class="d-block p-3 link-dark text-decoration-none"
-        title=""
-        data-bs-toggle="tooltip"
-        data-bs-placement="right"
-        data-bs-original-title="Logo"
-    >
-        <img
-        scr="../assets/images/image-4.jpeg"
-        class="bi"
-        width="40"
-        height="32"
-        />
-        <span class="visually-hidden">Logo</span>
-    </a>
+  <div
+    class="d-flex flex-column flex-shrink-0 bg-light vh-100"
+    style="width: 100px"
+  >
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-        <li class="nav-item">
-        <router-link 
-            to="/"
-            class="nav-link active py-3 border-bottom"
-            aria-current="page"
-            title=""
-            data-bs-toggle="tooltip"
-            data-bs-placement="right"
-            data-bs-original-title="Calendar"
-        >
-            <font-awesome-icon icon="fa-solid fa-calendar-days" />
+      <li class="nav-item">
+        <router-link to="/calendar" class="nav-link py-3 border-bottom">
+          <font-awesome-icon icon="fa-solid fa-calendar-days" />
+          <small>Calendar</small>
         </router-link>
-        </li>
-        <li>
+      </li>
+      <li>
         <router-link
-            v-if="!isAdmin"
-            to="/list-view"
-            class="nav-link py-3 border-bottom"
-            title=""
-            data-bs-toggle="tooltip"
-            data-bs-placement="right"
-            data-bs-original-title="List"
+          v-if="!isAdmin"
+          to="/list-view"
+          class="nav-link py-3 border-bottom"
         >
-            <font-awesome-icon icon="fa-solid fa-bars" />
+          <font-awesome-icon icon="fa-solid fa-list" /> <small>List</small>
         </router-link>
-        </li>
-        <li>
+      </li>
+      <li>
         <router-link
-            v-if="isAdmin"
-            to="/list-manage"
-            class="nav-link py-3 border-bottom"
-            title=""
-            data-bs-toggle="tooltip"
-            data-bs-placement="right"
-            data-bs-original-title="List"
+          v-if="isAdmin"
+          to="/list-adm"
+          class="nav-link py-3 border-bottom"
         >
-            <font-awesome-icon icon="fa-solid fa-bars" />
+          <font-awesome-icon icon="fa-solid fa-list" /> <small>List</small>
         </router-link>
-        </li>
-        <li>
+      </li>
+      <li>
         <router-link
-            v-if="isAdmin"
-            to="/users"
-            class="nav-link py-3 border-bottom"
-            title=""
-            data-bs-toggle="tooltip"
-            data-bs-placement="right"
-            data-bs-original-title="Users"
+          v-if="isAdmin"
+          to="/users"
+          class="nav-link py-3 border-bottom"
         >
-            <font-awesome-icon icon="fa-solid fa-user" />
+          <font-awesome-icon icon="fa-solid fa-users" /> <small>Users</small>
         </router-link>
-        </li>
+      </li>
     </ul>
-    </div>
+  </div>
 </template>
 
 <script>
-
 export default {
-  name: 'sidebar',
+  name: "sidebar",
   computed: {
     isAdmin() {
-      return this.$store.getters.isAdmin;
-    }
-  }
+      return this.$store.state.auth.user.roles.includes("ROLE_ADMIN");
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
+body {
+  background-color: #eee;
+}
+.nav-link {
+  border-radius: 0px !important;
+  transition: all 0.5s;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+}
+.nav-link small {
+  font-size: 12px;
+}
+.nav-link:hover {
+  background-color: #52525240 !important;
+}
+.nav-link .svg-inline--fa {
+  transition: all 1s;
+  font-size: 20px;
+}
+.nav-link:hover .svg-inline--fa {
+  transform: rotate(360deg);
+}
 </style>

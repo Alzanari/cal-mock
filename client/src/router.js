@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Login from "./components/children/login.vue";
+import Login from "./components/login.vue";
+import Home from "./components/home.vue";
 import Calendar from "./components/children/calendar.vue";
 import List from "./components/children/list.vue";
 // lazy-loaded
@@ -9,38 +10,46 @@ const ListAdm = () => import("./components/children/listAdm.vue")
 const routes = [
   {
     path: "/",
-    name: "calendar",
-    component: Calendar,
-  },
-  {
-    path: "/list-view",
-    component: List,
+    name: "home",
+    component: Home,
+    children: [
+      {
+        path: "calendar",
+        component: Calendar,
+      },
+      {
+        path: "list-view",
+        component: List,
+      },
+      {
+        path: "list-adm",
+        name: "list-adm",
+        // lazy-loaded
+        component: ListAdm,
+      },
+      {
+        path: "users",
+        name: "users",
+        // lazy-loaded
+        component: Users,
+      },
+    ]
   },
   {
     path: "/login",
-    component: Login,
+    component: Login
   },
 //   {
 //     path: "/register",
 //     component: Register,
 //   },
-  {
-    path: "/users",
-    name: "users",
-    // lazy-loaded
-    component: Users,
-  },
-  {
-    path: "/list-manage",
-    name: "list-manage",
-    // lazy-loaded
-    component: ListAdm,
-  },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  linkActiveClass: "active", // instead of the default router-link-active
+  linkExactActiveClass: "active",
 });
 
 router.beforeEach((to, from, next) => {

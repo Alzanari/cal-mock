@@ -1,12 +1,12 @@
 <template>
-  <div id="app">
+  <div>
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href="/" class="navbar-brand">Task App</a>
+      <a href="/" class="navbar-brand mx-3 me-auto">Task App</a>
 
 
-      <div class="navbar-nav ml-auto">
+      <div class="navbar-nav mx-3">
         <li class="nav-item">
-            <font-awesome-icon icon="user" />
+          <font-awesome-icon icon="fa-solid fa-user" />
             {{ currentUser.username }}
         </li>
         <li class="nav-item">
@@ -16,10 +16,6 @@
         </li>
       </div>
     </nav>
-
-    <div class="container">
-      <router-view />
-    </div>
   </div>
 </template>
 
