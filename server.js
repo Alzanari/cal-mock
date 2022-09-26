@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const Sequelize = require("sequelize");
 const db = require("./models");
 const cron = require("node-cron");
-const mailConfigurations = require("./mail/mail");
+const send = require("./views/mail");
 
 
 // enable express to do Cross-origin resource sharing
@@ -41,17 +41,16 @@ app.use("/api/user",userR);
 app.use("/api/event",eventR);
 
 // Schedule mail delivery everyday at 10:00 am (0 10 * * *)
-const mailJob = new cron.schedule(' 40 * * * *', () => {
-    transporter.sendMail(mailConfigurations, function(error, info){
-        if (error) throw Error(error);
-           console.log('Email Sent Successfully');
-        console.log(info);
-    });
-});
-mailJob.start();
+// const mailJob = new cron.schedule(' * * * * *', () => {
+    
+// });
+// mailJob.start();
+
 
 // check model object magic methods
 // console.log(Object.keys(db.User.prototype));
+
+send.sendEmail();
 
 // app port
 app.listen(3000, () => {
