@@ -1,31 +1,30 @@
-import axios from 'axios';
-import authHeader from './auth-header';
+import api from './api';
 
-const API_URL = 'http://localhost:8080/api/users';
+// const API_URL = 'http://localhost:8080/api/users';
 
 class UserService {
   getAllUsers() {
-    return axios.get(API_URL + '/all');
+    return api.get('/users/all');
   }
 
   getUser(user) {
-    return axios.post(API_URL + '/find', {
+    return api.post('/users/find', {
         username: user.username
-    } ,{ headers: authHeader() });
+    });
   }
 
   updateUser(user) {
-    return axios.put(API_URL + '/update', {
+    return api.put('/users/update', {
         username: user.username,
         email: user.email,
         password: user.password
-    }, { headers: authHeader() });
+    });
   }
 
   deleteUser(user) {
-    return axios.delete(API_URL + '/delete', {
+    return api.delete('/users/delete', {
         id: user.id
-    }, { headers: authHeader() });
+    });
   }
 }
 

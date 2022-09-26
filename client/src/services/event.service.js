@@ -1,40 +1,37 @@
-import axios from 'axios';
-import authHeader from './auth-header';
-
-const API_URL = 'http://localhost:8080/api/events';
+import api from './api';
 
 class EventService {
   getAllEvents() {
-    return axios.get(API_URL + '/all', { headers: authHeader() });
+    return api.get('/event/all');
   }
 
   getEvent(event) {
-    return axios.get(API_URL + '/event', {
+    return api.get('/event/event', {
         id: event.id
-    }, { headers: authHeader() });
+    });
   }
 
   createEvent(event) {
-    return axios.post(API_URL + '/create', {
+    return api.post('/event/create', {
         title: event.title,
         comment: event.comment,
         date: event.date
-    } ,{ headers: authHeader() });
+    });
   }
 
   updateUser(event) {
-    return axios.put(API_URL + '/update', {
+    return api.put('/event/update', {
         title: event.title,
         comment: event.comment,
         date: event.date,
         status: event.status
-    }, { headers: authHeader() });
+    });
   }
 
   deleteUser(event) {
-    return axios.delete(API_URL + '/delete', {
+    return api.delete('/event/delete', {
         id: event.id
-    }, { headers: authHeader() });
+    });
   }
 }
 
