@@ -6,7 +6,6 @@ const setup = (store) => {
     (config) => {
       const token = TokenService.getLocalAccessToken();
       if (token) {
-        // config.headers["Authorization"] = 'Bearer ' + token;  // for Spring Boot back-end
         config.headers["x-access-token"] = token; // for Node.js Express back-end
       }
       return config;

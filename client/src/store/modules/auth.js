@@ -8,11 +8,6 @@ const initialState = user
 export const auth = {
   namespaced: true,
   state: initialState,
-  getters: {
-    isAdmin(state) {
-      return (state.initialState.user.roles).includes("admin");
-    }
-  },
   actions: {
     login({ commit }, user) {
       return AuthService.login(user).then(
