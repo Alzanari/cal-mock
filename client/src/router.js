@@ -1,10 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Login from "./components/login.vue";
-import Calendar from "./components/calendar.vue";
-import List from "./components/list.vue";
+import Login from "./components/children/login.vue";
+import Calendar from "./components/children/calendar.vue";
+import List from "./components/children/list.vue";
 // lazy-loaded
-const Users = () => import("./components/user.vue")
-const ListAdm = () => import("./components/listAdm.vue")
+const Users = () => import("./components/children/user.vue")
+const ListAdm = () => import("./components/children/listAdm.vue")
 
 const routes = [
   {
