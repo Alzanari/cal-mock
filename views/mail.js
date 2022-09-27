@@ -1,15 +1,32 @@
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 const sender = require("../config/mail");
 const db = require("../models");
 const Event = db.Event;
 const User = db.User;
 
+const myOAuth2Client = new OAuth2(
+    sender.clientId,
+    sender.clientSecret,
+);
+
+myOAuth2Client.setCredentials({
+    refresh_token:sender.refreshToken
+});
+
+const myAccessToken = myOAuth2Client.getAccessToken();
+
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
-        user: sender.user,
-        pass: sender.pass
+         type: "OAuth2",
+         user: sender.user,
+         clientId: sender.clientId,
+         clientSecret: sender.clientSecret,
+         refreshToken: sender.refreshToken,
+         accessToken: myAccessToken
     }
 });
 
@@ -23,23 +40,12 @@ transporter.use('compile', hbs({
     extName: '.handlebars'
   }));
 
-const mailOptions = {
-    from: "gutshellsing666@gmail.com",
-    to: "hellsing-666@hotmail.fr",
-    subject: "testing nodemailer",
-    template: '2daysB',
-    context: {
-        event_name: "Best Even ever",
-        event_username: "alucard",
-        event_date: "26-09-2022"
-    }
-};
 
 exports.sendEmail = function (from, to, subject, callback) {
 
     var email = {
         from: "gutshellsing@gmail.com",
-        to: "sscuaknewkdghvkuxi@kvhrr.com",
+        to: "alzanari@protonmail.com",
         subject: "testing nodemailer",
         template: '2daysB',
         context: {
