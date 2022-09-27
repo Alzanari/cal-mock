@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
   Event.init({
     title: DataTypes.STRING,
     comment: DataTypes.STRING,
+    start:DataTypes.DATE,
+    end:DataTypes.DATE,
+    allDay:DataTypes.TINYINT,
     status: DataTypes.ENUM('pending','validated', 'rejected')
   }, {
     sequelize,

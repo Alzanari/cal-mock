@@ -14,7 +14,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "fromModels",
-  created: "2022-09-22T17:08:18.291Z",
+  created: "2022-09-27T10:50:09.274Z",
   comment: "",
 };
 
@@ -79,6 +79,9 @@ const migrationCommands = (transaction) => [
         },
         title: { type: Sequelize.STRING, field: "title" },
         comment: { type: Sequelize.STRING, field: "comment" },
+        start: { type: Sequelize.DATE, field: "start" },
+        end: { type: Sequelize.DATE, field: "end" },
+        allDay: { type: Sequelize.TINYINT, field: "allDay" },
         status: {
           type: Sequelize.ENUM("pending", "validated", "rejected"),
           field: "status",

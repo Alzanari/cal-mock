@@ -6,6 +6,9 @@ const createEvent = async (req, res) => {
         const event = await Event.create({
             title: req.body.title,
             comment: req.body.comment,
+            start: req.body.start,
+            end: req.body.end,
+            allDay: req.body.allDay // status has a default value of pending
         });
         res.status(200).send({
             message: "event created successfully",
@@ -58,6 +61,9 @@ const updateEvent = async (req, res) => {
         const event = await Event.update({
             title: req.body.title,
             comment: req.body.comment,
+            start: req.body.start,
+            end: req.body.end,
+            allDay: req.body.allDay,
             status: req.body.status
         });
         res.status(200).send({

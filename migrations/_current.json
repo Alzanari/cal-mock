@@ -18,6 +18,18 @@
                     "field": "comment",
                     "seqType": "Sequelize.STRING"
                 },
+                "start": {
+                    "field": "start",
+                    "seqType": "Sequelize.DATE"
+                },
+                "end": {
+                    "field": "end",
+                    "seqType": "Sequelize.DATE"
+                },
+                "allDay": {
+                    "field": "allDay",
+                    "seqType": "Sequelize.TINYINT"
+                },
                 "status": {
                     "field": "status",
                     "seqType": "Sequelize.ENUM('pending', 'validated', 'rejected')"
