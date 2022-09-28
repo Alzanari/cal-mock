@@ -1,17 +1,18 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
 const { verifySignUp, authJwt } = require("../middleware");
 const controller = require("../controllers/auth.controller");
-const auth = require('../config/auth');
+const auth = require("../config/auth");
 
 // for admin to create a user
-// router.post("/signup", [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted, authJwt.verifyToken, authJwt.isAdmin], controller.signup); 
-router.post("/signup", [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted], controller.signup); 
-
+// router.post("/signup", [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted, authJwt.verifyToken, authJwt.isAdmin], controller.signup);
+router.post("/signup", [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted], controller.signup);
 
 // for user to sign in and refresh his token
 router.post("/signin", controller.signin);
 
-router.post("/refreshtoken", [authJwt.verifyToken], controller.refreshToken);
+router.get("/refreshtoken", controller.refreshToken);
+
+router.get("/signout", [authJwt.verifyToken], controller.signout);
 
 module.exports = router;
