@@ -31,6 +31,9 @@
                     "seqType": "Sequelize.TINYINT"
                 },
                 "status": {
+                    "defaultValue": {
+                        "value": "pending"
+                    },
                     "field": "status",
                     "seqType": "Sequelize.ENUM('pending', 'validated', 'rejected')"
                 },
@@ -191,8 +194,8 @@
             "indexes": []
         }
     },
-    "path": "C:\\Users\\AD\\Desktop\\AZ\\cal-mock\\cal-mock\\migrations\\_current.json",
-    "backupPath": "C:\\Users\\AD\\Desktop\\AZ\\cal-mock\\cal-mock\\migrations\\_current_bak.json",
+    "path": "C:\\Users\\ryu\\Desktop\\New folder\\cal\\migrations\\_current.json",
+    "backupPath": "C:\\Users\\ryu\\Desktop\\New folder\\cal\\migrations\\_current_bak.json",
     "exists": false,
     "revision": 1
 }
