@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM("pending", "validated", "rejected"),
         defaultValue: "pending",
       },
+      color: {
+        type: DataTypes.STRING(7),
+        defaultValue: "#FF6F0E",
+      },
     },
     {
       sequelize,

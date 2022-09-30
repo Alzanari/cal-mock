@@ -37,6 +37,13 @@
                     "field": "status",
                     "seqType": "Sequelize.ENUM('pending', 'validated', 'rejected')"
                 },
+                "color": {
+                    "defaultValue": {
+                        "value": "#FF6F0E"
+                    },
+                    "field": "color",
+                    "seqType": "Sequelize.STRING(7)"
+                },
                 "createdAt": {
                     "allowNull": false,
                     "field": "createdAt",
