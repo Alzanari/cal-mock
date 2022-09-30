@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth");
 const db = require("../models");
-const User = db.user;
+const User = db.User;
 
 const { TokenExpiredError } = jwt;
 
@@ -35,7 +35,6 @@ isAdmin = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.userId);
     const roles = await user.getRoles();
-
     for (let i = 0; i < roles.length; i++) {
       if (roles[i].name === "admin") {
         return next();
