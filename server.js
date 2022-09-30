@@ -52,6 +52,7 @@ mailJob.start();
 
 // check model object magic methods
 // console.log(Object.keys(db.User.prototype));
+// console.log(db);
 
 // app port
 app.listen(3000, () => {
