@@ -14,7 +14,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "genereated",
-  created: "2022-09-28T14:48:46.564Z",
+  created: "2022-09-29T15:57:58.775Z",
   comment: "",
 };
 
@@ -86,6 +86,11 @@ const migrationCommands = (transaction) => [
           type: Sequelize.ENUM("pending", "validated", "rejected"),
           field: "status",
           defaultValue: "pending",
+        },
+        color: {
+          type: Sequelize.STRING(7),
+          field: "color",
+          defaultValue: "#FF6F0E",
         },
         createdAt: {
           type: Sequelize.DATE,
