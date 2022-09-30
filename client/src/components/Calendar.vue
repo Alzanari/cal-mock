@@ -38,13 +38,7 @@
                 required
               />
             </b-form-group>
-            <b-form-group
-              class="mx-auto"
-              label="End"
-              label-for="end-input"
-              invalid-feedback="End is required"
-              :state="endState"
-            >
+            <b-form-group class="mx-auto" label="End" label-for="end-input" :state="endState">
               <input class="form-control" type="datetime-local" id="end-input" v-model="end" :state="endState" />
             </b-form-group>
           </div>
@@ -158,7 +152,6 @@ export default {
       this.titleState = valid;
       this.commentState = valid;
       this.startState = valid;
-      this.endState = valid;
       this.allDayState = valid;
       return valid;
     },
