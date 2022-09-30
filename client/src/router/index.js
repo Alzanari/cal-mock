@@ -1,17 +1,20 @@
-import { createWebHistory, createRouter } from "vue-router";
-import Login from "./components/login.vue";
-import Home from "./components/home.vue";
-import Calendar from "./components/children/calendar.vue";
-import List from "./components/children/list.vue";
+import Vue from "vue";
+import VueRouter from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import LoginView from "../views/LoginView.vue";
+import Calendar from "../components/Calendar.vue";
+import ListUser from "../components/ListUser.vue";
 // lazy-loaded
-const Users = () => import("./components/children/user.vue")
-const ListAdm = () => import("./components/children/listAdm.vue")
+const Users = () => import("../components/Users.vue");
+const ListAdmin = () => import("../components/ListAdmin.vue");
+
+Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "home",
-    component: Home,
+    component: HomeView,
     children: [
       {
         path: "calendar",
@@ -19,13 +22,13 @@ const routes = [
       },
       {
         path: "list-view",
-        component: List,
+        component: ListUser,
       },
       {
         path: "list-adm",
         name: "list-adm",
         // lazy-loaded
-        component: ListAdm,
+        component: ListAdmin,
       },
       {
         path: "users",
@@ -33,34 +36,31 @@ const routes = [
         // lazy-loaded
         component: Users,
       },
-    ]
+    ],
   },
   {
     path: "/login",
-    component: Login
+    component: LoginView,
   },
-//   {
-//     path: "/register",
-//     component: Register,
-//   },
 ];
 
-const router = createRouter({
-  history: createWebHistory(),
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
   routes,
   linkActiveClass: "active", // instead of the default router-link-active
   linkExactActiveClass: "active",
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login'];
+  const publicPages = ["/login"];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = localStorage.getItem('user');
+  const loggedIn = localStorage.getItem("user");
 
   // trying to access a restricted page + not logged in
   // redirect to login page
   if (authRequired && !loggedIn) {
-    next('/login');
+    return next("/login");
   } else {
     next();
   }

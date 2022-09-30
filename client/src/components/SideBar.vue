@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="d-flex flex-column flex-shrink-0 bg-light vh-100"
-    style="width: 100px"
-  >
+  <div class="d-flex flex-column flex-shrink-0 bg-light vh-100" style="width: 100px">
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
       <li class="nav-item">
         <router-link to="/calendar" class="nav-link py-3 border-bottom">
@@ -11,29 +8,17 @@
         </router-link>
       </li>
       <li>
-        <router-link
-          v-if="!isAdmin"
-          to="/list-view"
-          class="nav-link py-3 border-bottom"
-        >
+        <router-link v-if="!isAdmin" to="/list-view" class="nav-link py-3 border-bottom">
           <font-awesome-icon icon="fa-solid fa-list" /> <small>List</small>
         </router-link>
       </li>
       <li>
-        <router-link
-          v-if="isAdmin"
-          to="/list-adm"
-          class="nav-link py-3 border-bottom"
-        >
+        <router-link v-if="isAdmin" to="/list-adm" class="nav-link py-3 border-bottom">
           <font-awesome-icon icon="fa-solid fa-list" /> <small>List</small>
         </router-link>
       </li>
       <li>
-        <router-link
-          v-if="isAdmin"
-          to="/users"
-          class="nav-link py-3 border-bottom"
-        >
+        <router-link v-if="isAdmin" to="/users" class="nav-link py-3 border-bottom">
           <font-awesome-icon icon="fa-solid fa-users" /> <small>Users</small>
         </router-link>
       </li>
@@ -43,10 +28,10 @@
 
 <script>
 export default {
-  name: "sidebar",
+  name: "SideBar",
   computed: {
     isAdmin() {
-      return this.$store.state.auth.user.roles.includes("ROLE_ADMIN");
+      return this.$store.getters["auth/isAdmin"];
     },
   },
 };

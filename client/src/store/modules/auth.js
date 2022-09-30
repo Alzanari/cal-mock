@@ -1,68 +1,60 @@
-import AuthService from '../../services/auth.service';
+import axios from "axios";
 
-const user = JSON.parse(localStorage.getItem('user'));
-const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
+const user = JSON.parse(localStorage.getItem("user"));
+const initialState = user ? { status: "success", user } : { status: { loggedIn: false }, user: null };
 
 export const auth = {
   namespaced: true,
   state: initialState,
+  getters: {
+    isLoggedIn: (state) => !!state.user,
+    isAdmin: (state) => state.user.roles.includes("ROLE_ADMIN"),
+    authStatus: (state) => state.status,
+    getUser: (state) => state.user,
+  },
   actions: {
     login({ commit }, user) {
-      return AuthService.login(user).then(
-        user => {
-          commit('loginSuccess', user);
-          return Promise.resolve(user);
-        },
-        error => {
-          commit('loginFailure');
-          return Promise.reject(error);
-        }
-      );
+      return new Promise((resolve, reject) => {
+        commit("auth_request");
+        axios
+          .post("/auth/signin", user)
+          .then((resp) => {
+            const user = resp.data;
+            // Add the following line:
+            localStorage.setItem("user", JSON.stringify(user));
+            commit("auth_success", user);
+            resolve(resp);
+          })
+          .catch((err) => {
+            commit("auth_error");
+            localStorage.removeItem("user");
+            reject(err);
+          });
+      });
     },
     logout({ commit }) {
-      AuthService.logout();
-      commit('logout');
+      return new Promise((resolve, reject) => {
+        axios.get("/auth/signout").then(() => {
+          localStorage.removeItem("user");
+          commit("logout");
+        });
+        resolve();
+      });
     },
-    register({ commit }, user) {
-      return AuthService.register(user).then(
-        response => {
-          commit('registerSuccess');
-          return Promise.resolve(response.data);
-        },
-        error => {
-          commit('registerFailure');
-          return Promise.reject(error);
-        }
-      );
-    },
-    refreshToken({ commit }, accessToken) {
-      commit('refreshToken', accessToken);
-    }
   },
   mutations: {
-    loginSuccess(state, user) {
-      state.status.loggedIn = true;
+    auth_request(state) {
+      state.status = "loading";
+    },
+    auth_success(state, user) {
+      state.status = "success";
       state.user = user;
     },
-    loginFailure(state) {
-      state.status.loggedIn = false;
-      state.user = null;
+    auth_error(state) {
+      state.status = "error";
     },
     logout(state) {
-      state.status.loggedIn = false;
-      state.user = null;
+      state.status = "";
     },
-    registerSuccess(state) {
-      state.status.loggedIn = false;
-    },
-    registerFailure(state) {
-      state.status.loggedIn = false;
-    },
-    refreshToken(state, accessToken) {
-      state.status.loggedIn = true;
-      state.user = { ...state.user, accessToken: accessToken };
-    }
-  }
+  },
 };

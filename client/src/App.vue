@@ -1,30 +1,7 @@
 <template>
-  <div class="container-fluid">
+  <b-container fluid id="app">
     <router-view></router-view>
-  </div>
+  </b-container>
 </template>
 
-<script>
-  import EventBus from "./common/EventBus";
-
-export default {
-  name: 'App',
-  methods: {
-    logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
-    }
-  },
-  mounted() {
-    EventBus.on("logout", () => {
-      this.logOut();
-    });
-  },
-  beforeUnmount() {
-    EventBus.remove("logout");
-  }
-};
-</script>
-
-<style>
-</style>
+<style></style>
