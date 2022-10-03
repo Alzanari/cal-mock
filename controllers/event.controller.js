@@ -107,31 +107,6 @@ const updateStatus = async (req, res) => {
   }
 };
 
-const updateStatus = async (req, res) => {
-  try {
-    const event = await Event.update(
-      {
-        status: req.body.status,
-        color: req.body.color,
-      },
-      {
-        where: {
-          id: req.body.id,
-        },
-      }
-    );
-    return res.status(200).send({
-      message: "event's status updated successfully",
-      data: event,
-    });
-  } catch (error) {
-    return res.status(400).send({
-      message: "event's status could not be updated",
-      errors: error,
-    });
-  }
-};
-
 const deleteEvent = async (req, res) => {
   try {
     const event = await Event.destroy({
@@ -139,7 +114,7 @@ const deleteEvent = async (req, res) => {
         id: req.body.id,
       },
     });
-    return return res.status(200).send({
+    return res.status(200).send({
       message: "event deleted successfully",
     });
   } catch (error) {
