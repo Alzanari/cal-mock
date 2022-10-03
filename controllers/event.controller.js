@@ -8,22 +8,19 @@ const createEvent = async (req, res) => {
       where: {
         id: req.userId,
       },
-    })
-      .then((user) => {
-        user.createEvent({
-          title: req.body.title,
-          comment: req.body.comment,
-          start: req.body.start,
-          end: req.body.end,
-          allDay: req.body.allDay,
-        });
-      })
-      .then((event) => {
-        res.status(200).send({
-          message: "event created successfully",
-          data: event,
-        });
-      });
+    });
+    const eve = await user.createEvent({
+      title: req.body.title,
+      comment: req.body.comment,
+      start: req.body.start,
+      end: req.body.end,
+      allDay: req.body.allDay,
+    });
+    console.log(eve);
+    res.status(200).send({
+      message: "event created successfully",
+      data: eve,
+    });
   } catch (error) {
     return res.status(400).send({
       message: "event could not be created",
@@ -116,6 +113,9 @@ const deleteEvent = async (req, res) => {
     });
     return res.status(200).send({
       message: "event deleted successfully",
+      data: {
+        id: req.body.id,
+      },
     });
   } catch (error) {
     return res.status(400).send({

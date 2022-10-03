@@ -144,20 +144,27 @@ export default {
       // console.log(data);
       if (data) {
         this.$store.dispatch("user/addUser", data);
+        this.$nextTick(() => {
+          this.$refs.addUserForm.hide();
+        });
       }
     },
     submitFromEditModal() {
       const data = this.$refs.editUserForm.submit();
-      // console.log(data);
       if (data) {
         this.$store.dispatch("user/updateUser", data);
+        this.$nextTick(() => {
+          this.$refs.editUserForm.hide();
+        });
       }
     },
     submitFromDeleteModal() {
       const data = this.$refs.deleteUserForm.submit();
-      // console.log("data here ", data);
       if (data) {
         this.$store.dispatch("user/deleteUser", data);
+        this.$nextTick(() => {
+          this.$refs.deleteUserForm.hide();
+        });
       }
     },
   },

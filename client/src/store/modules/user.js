@@ -1,5 +1,4 @@
 import axios from "axios";
-import router from "../../router";
 
 const initialState = {
   users: [],
@@ -35,65 +34,50 @@ export const user = {
       commit("setUsers", response.data.data);
       return await Promise.resolve(response);
     },
-    async updateUser({ commit }, user) {
+    async updateUser({ dispatch }, user) {
       try {
-        let res = await axios.put("/user/update", {
+        await axios.put("/user/update", {
           username: user.username,
           email: user.email,
           password: user.password,
         });
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        dispatch("fetchUsers");
       } catch (error) {
         console.error(error);
       }
     },
-    async setAdmin({ commit }, user) {
+    async setAdmin({ dispatch }, user) {
       try {
-        let res = await axios.put("/user/setAdmin", {
+        await axios.put("/user/setAdmin", {
           id: user.id,
         });
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        dispatch("fetchUsers");
       } catch (error) {
         console.error(error);
       }
     },
-    async removeAdmin({ commit }, user) {
+    async removeAdmin({ dispatch }, user) {
       try {
-        let res = await axios.put("/user/removeAdmin", {
+        await axios.put("/user/removeAdmin", {
           id: user.id,
         });
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        dispatch("fetchUsers");
       } catch (error) {
         console.error(error);
       }
     },
-    async deleteUser({ commit }, user) {
+    async deleteUser({ dispatch }, user) {
       try {
-        let res = await axios.delete("/user/delete", { data: { id: user.id } });
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        await axios.delete("/user/delete", { data: { id: user.id } });
+        dispatch("fetchUsers");
       } catch (error) {
         console.error(error);
       }
     },
-    async addUser({ commit }, user) {
+    async addUser({ dispatch }, user) {
       try {
-        let res = await axios.post("/auth/signup", user);
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        await axios.post("/auth/signup", user);
+        dispatch("fetchUsers");
       } catch (error) {
         console.error(error);
       }

@@ -1,6 +1,5 @@
 import axios from "axios";
 import moment from "moment";
-import router from "../../router";
 
 const initialState = {
   events: [],
@@ -39,41 +38,35 @@ export const event = {
       commit("setEvents", response.data.data);
       return await Promise.resolve(response);
     },
-    async addEvent({ commit }, event) {
+    async addEvent({ dispatch }, event) {
       try {
-        let res = await axios.post("/event/create", {
+        await axios.post("/event/create", {
           title: event.title,
           comment: event.comment,
           start: event.start,
           end: event.end,
           allDay: event.allDay,
         });
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        dispatch("fetchEvents");
       } catch (error) {
         console.error(error);
       }
     },
-    async updateStatus({ commit }, event) {
+    async updateStatus({ dispatch }, event) {
       try {
-        let res = await axios.put("/event/status", {
+        await axios.put("/event/status", {
           id: event.id,
           status: event.status,
           color: event.color,
         });
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        dispatch("fetchEvents");
       } catch (error) {
         console.error(error);
       }
     },
-    async updateEvent({ commit }, event) {
+    async updateEvent({ dispatch }, event) {
       try {
-        let res = await axios.put("/event/update", {
+        await axios.put("/event/update", {
           id: event.id,
           title: event.title,
           comment: event.comment,
@@ -82,21 +75,15 @@ export const event = {
           allDay: event.allDay,
           status: event.status,
         });
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        dispatch("fetchEvents");
       } catch (error) {
         console.error(error);
       }
     },
-    async deleteEvent({ commit }, event) {
+    async deleteEvent({ dispatch }, event) {
       try {
-        let res = await axios.delete("/event/delete", { data: { id: event.id } });
-        if (res.status == 200) {
-          router.go(0);
-        }
-        return res.data;
+        await axios.delete("/event/delete", { data: { id: event.id } });
+        dispatch("fetchEvents");
       } catch (error) {
         console.error(error);
       }
@@ -106,11 +93,7 @@ export const event = {
     },
   },
   mutations: {
-    setEvents(state, events) {
-      state.events = events;
-    },
-    setweekendsEnabled(state, enabled) {
-      state.weekendsVisible = enabled;
-    },
+    setEvents: (state, events) => (state.events = events),
+    setweekendsEnabled: (state, enabled) => (state.weekendsVisible = enabled),
   },
 };

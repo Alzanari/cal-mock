@@ -43,11 +43,11 @@
             <b-button @click="showDeleteModal(data.item)" class="mx-1">Delete</b-button>
           </template>
         </b-table>
-        <b-modal ref="editEventModal" title="Edit Event" @ok.prevent="submitFromEditModal">
+        <b-modal id="editModal" ref="editEventModal" title="Edit Event" @ok.prevent="submitFromEditModal">
           <EditForm ref="editEventForm" :event="currentEvent" />
         </b-modal>
 
-        <b-modal ref="deleteEventModal" title="Delete Event" @ok.prevent="submitFromDeleteModal">
+        <b-modal id="deleteModal" ref="deleteEventModal" title="Delete Event" @ok.prevent="submitFromDeleteModal">
           <DeleteForm ref="deleteEventForm" :event="currentEvent" />
         </b-modal>
       </b-col>
@@ -146,6 +146,9 @@ export default {
       // console.log(data);
       if (data) {
         this.$store.dispatch("event/updateEvent", data);
+        this.$nextTick(() => {
+          this.$refs.editEventModal.hide();
+        });
       }
     },
     submitFromDeleteModal() {
@@ -153,6 +156,9 @@ export default {
       // console.log(data);
       if (data) {
         this.$store.dispatch("event/deleteEvent", data);
+        this.$nextTick(() => {
+          this.$refs.deleteEventModal.hide();
+        });
       }
     },
     exportExcel() {
@@ -162,9 +168,6 @@ export default {
 
       exportFromJSON({ data, fileName, exportType });
     },
-  },
-  mounted() {
-    this.$store.dispatch("event/fetchEvents");
   },
 };
 </script>

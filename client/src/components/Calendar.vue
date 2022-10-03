@@ -56,7 +56,7 @@
         </form>
       </b-modal>
     </div>
-    <full-calendar class="full-calendar" :options="config">
+    <full-calendar ref="calendar" class="full-calendar" :options="config">
       <template #eventContent="{ timeText, event }">
         <b>{{ timeText }}</b>
         <i>{{ event.title }}</i>
@@ -111,8 +111,7 @@ export default {
         selectMirror: false,
         navLinks: true,
         dayMaxEvents: true,
-        events: this.$store.getters["event/allEvents"],
-        weekends: this.$store.getters["event/weekendsVisible"],
+        firstDay: "1",
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         headerToolbar: {
           left: "title",
@@ -127,6 +126,7 @@ export default {
           endTime: "19:00", // an end time (7pm in this example)
         },
         initialView: "dayGridMonth",
+        events: this.allEvents,
       };
     },
 
@@ -190,7 +190,7 @@ export default {
 
       // Hide the modal manually
       this.$nextTick(() => {
-        this.$bvModal.hide("modal-prevent-closing");
+        this.$bvModal.hide("modal-add-event");
       });
     },
   },
