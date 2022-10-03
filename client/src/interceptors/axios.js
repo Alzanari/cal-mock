@@ -15,7 +15,8 @@ axios.interceptors.response.use(
       let status = ref.status;
 
       if (status === 200) {
-        return axios(error.config);
+        // console.log(error.config);
+        return axios.request(error.config);
       }
     }
     refresh = false;
