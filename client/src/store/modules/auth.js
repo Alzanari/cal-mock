@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const user = JSON.parse(localStorage.getItem("user"));
-const initialState = user ? { status: "success", user } : { status: { loggedIn: false }, user: null };
+const initialState = user ? { status: "success", user } : { status: { status: "" }, user: null };
 
 export const auth = {
   namespaced: true,

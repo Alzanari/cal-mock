@@ -124,7 +124,7 @@ export default {
           daysOfWeek: [1, 2, 3, 4, 5], // Monday to Friday
 
           startTime: "9:00", // a start time (9am in this example)
-          endTime: "19:00", // an end time (6pm in this example)
+          endTime: "19:00", // an end time (7pm in this example)
         },
         initialView: "dayGridMonth",
       };
@@ -198,13 +198,10 @@ export default {
 </script>
 
 <style scoped>
-/* #Bfix {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-} */
-
 .fc-event-main span b {
+  margin-right: 5px;
+}
+.fc-daygrid-dot-event span b {
   margin-right: 5px;
 }
 </style>
