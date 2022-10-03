@@ -19,6 +19,7 @@
     <b-row>
       <b-col>
         <b-table
+          ref="tableAdmin"
           striped
           hover
           :items="events"
@@ -28,6 +29,10 @@
           :per-page="perPage"
           :current-page="currentPage"
         >
+          <template v-slot:cell(select)="data">
+            <b-form-checkbox v-model="selected" :value="data.item" name="selected-rows" @change="onRowSelected()">
+            </b-form-checkbox>
+          </template>
           <template v-slot:cell(update)="data">
             <b-button id="pending" @click="statusUpdate(data.item.id, $event.target.id)">P</b-button>
             <b-button id="validated" @click="statusUpdate(data.item.id, $event.target.id)" class="mx-1">V</b-button>
@@ -69,12 +74,13 @@ export default {
   },
   data() {
     return {
-      fields: ["id", "user", "title", "comment", "start", "end", "allDay", "status", "update", "actions"],
+      fields: ["select", "id", "user", "title", "comment", "start", "end", "allDay", "status", "update", "actions"],
       headVariant: "dark",
       filter: "",
       perPage: 10,
       currentPage: 1,
       currentEvent: null,
+      selected: [],
     };
   },
   computed: {
@@ -86,6 +92,16 @@ export default {
     },
   },
   methods: {
+    onRowSelected() {
+      // TODO: fix rowSelection that change row's color
+      // let tableRef = this.$refs.tableAdmin;
+      // if (checked === false) {
+      //   tableRef.selectRow(index);
+      // } else {
+      //   tableRef.unselectRow(index);
+      // }
+      console.log("selected ", this.selected);
+    },
     statusFilter(status) {
       if (status == "all") {
         status = "";

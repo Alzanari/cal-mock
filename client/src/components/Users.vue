@@ -12,6 +12,7 @@
     <b-row>
       <b-col>
         <b-table
+          ref="tableAdmin"
           striped
           hover
           :items="users"
@@ -21,6 +22,10 @@
           :per-page="perPage"
           :current-page="currentPage"
         >
+          <template v-slot:cell(select)="data">
+            <b-form-checkbox v-model="selected" :value="data.item" name="selected-rows" @change="onRowSelected()">
+            </b-form-checkbox>
+          </template>
           <template v-slot:cell(permissions)="data">
             <b-button v-if="data.item.admin == 'No'" @click="setAdmin(data.item.id)">Add</b-button>
             <b-button
@@ -73,12 +78,13 @@ export default {
   },
   data() {
     return {
-      fields: ["id", "username", "email", "admin", "permissions", "actions"],
+      fields: ["select", "id", "username", "email", "admin", "permissions", "actions"],
       headVariant: "dark",
       filter: "",
       perPage: 10,
       currentPage: 1,
       currentUser: null,
+      selected: [],
     };
   },
   computed: {
@@ -93,6 +99,16 @@ export default {
     },
   },
   methods: {
+    onRowSelected() {
+      // TODO: fix rowSelection that change row's color
+      // let tableRef = this.$refs.tableAdmin;
+      // if (checked === false) {
+      //   tableRef.selectRow(index);
+      // } else {
+      //   tableRef.unselectRow(index);
+      // }
+      console.log("selected ", this.selected);
+    },
     exportExcel() {
       const data = this.$store.getters["user/allUsers"];
       const fileName = "all_users";
