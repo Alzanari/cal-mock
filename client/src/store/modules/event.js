@@ -16,7 +16,7 @@ export const event = {
       let items = [];
       state.events.forEach((event) => {
         let start = moment(event.start).format("YYYY-MM-DD HH:MM");
-        let end = moment(event.end).format("YYYY-MM-DD HH:MM");
+        let end = event.end ? moment(event.end).format("YYYY-MM-DD HH:MM") : "";
         let modified = {
           id: event.id,
           user: event.User.username,
