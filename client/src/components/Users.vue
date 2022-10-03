@@ -23,7 +23,12 @@
         >
           <template v-slot:cell(permissions)="data">
             <b-button v-if="data.item.admin == 'No'" @click="setAdmin(data.item.id)">Add</b-button>
-            <b-button v-if="data.item.admin == 'Yes'" @click="removeAdmin(data.item.id)" class="mx-1">remove</b-button>
+            <b-button
+              v-if="data.item.admin == 'Yes' && currentAdmin.id !== data.item.id"
+              @click="removeAdmin(data.item.id)"
+              class="mx-1"
+              >remove</b-button
+            >
           </template>
           <template v-slot:cell(actions)="data">
             <b-button @click="showEditModal(data.item)">Edit</b-button>
