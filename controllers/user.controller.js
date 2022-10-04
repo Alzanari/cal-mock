@@ -53,7 +53,6 @@ const updateUser = async (req, res) => {
       {
         username: req.body.username,
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 8),
       },
       {
         where: {
@@ -68,6 +67,30 @@ const updateUser = async (req, res) => {
     console.log(error);
     return res.status(400).send({
       message: "User could not be updated",
+      errors: error,
+    });
+  }
+};
+
+const updatePassword = async (req, res) => {
+  try {
+    const user = await User.update(
+      {
+        password: bcrypt.hashSync(req.body.password, 8),
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    );
+    res.status(200).send({
+      message: "User's password updated successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      message: "User's password could not be updated",
       errors: error,
     });
   }
@@ -128,4 +151,4 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { getUser, getAllUser, setAdmin, removeAdmin, updateUser, deleteUser };
+module.exports = { getUser, getAllUser, setAdmin, removeAdmin, updateUser, updatePassword, deleteUser };

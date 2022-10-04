@@ -8,7 +8,6 @@ const UserBodyRules = [
     .isLength({ min: 6 })
     .withMessage("User name must be 6 or more characters"),
   body("email").notEmpty().trim().escape().isEmail().withMessage("Email is not valid"),
-  body("password").isLength({ min: 8 }).withMessage("Password must be 8 or more characters"),
 ];
 
 const idCheckBodyRules = [
@@ -33,6 +32,16 @@ const usernameCheckBodyRules = [
     .withMessage("User name must be 6 or more characters"),
 ];
 
+const passwordCheckBodyRules = [
+  body("password").isLength({ min: 8 }).withMessage("Password must be 8 or more characters"),
+  body("password_conf").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("Password confirmation does not match password");
+    }
+    return true;
+  }),
+];
+
 const checkRules = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -43,6 +52,7 @@ const checkRules = (req, res, next) => {
 
 const verifyUser = {
   UserBodyRules,
+  passwordCheckBodyRules,
   idCheckBodyRules,
   usernameCheckBodyRules,
   checkRules,

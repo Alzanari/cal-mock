@@ -24,6 +24,18 @@ router.put(
 );
 
 router.put(
+  "/password",
+  [
+    verifyUser.idCheckBodyRules,
+    verifyUser.passwordCheckBodyRules,
+    verifyUser.checkRules,
+    authJwt.verifyToken,
+    authJwt.isAdmin,
+  ],
+  controller.updatePassword
+);
+
+router.put(
   "/update",
   [verifyUser.idCheckBodyRules, verifyUser.UserBodyRules, verifyUser.checkRules, authJwt.verifyToken, authJwt.isAdmin],
   controller.updateUser
