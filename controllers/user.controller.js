@@ -1,4 +1,5 @@
 const db = require("../models");
+const bcrypt = require("bcryptjs");
 const User = db.User;
 const Role = db.Role;
 const user_roles = db.user_roles;
@@ -62,9 +63,9 @@ const updateUser = async (req, res) => {
     );
     res.status(200).send({
       message: "User updated successfully",
-      data: user,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).send({
       message: "User could not be updated",
       errors: error,

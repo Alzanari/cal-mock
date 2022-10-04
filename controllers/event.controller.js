@@ -16,7 +16,6 @@ const createEvent = async (req, res) => {
       end: req.body.end,
       allDay: req.body.allDay,
     });
-    console.log(eve);
     res.status(200).send({
       message: "event created successfully",
       data: eve,
@@ -69,7 +68,6 @@ const updateEvent = async (req, res) => {
     );
     return res.status(200).send({
       message: "event updated successfully",
-      data: event,
     });
   } catch (error) {
     return res.status(400).send({
@@ -81,10 +79,26 @@ const updateEvent = async (req, res) => {
 
 const updateStatus = async (req, res) => {
   try {
+    let color = "";
+    switch (req.body.status) {
+      case "pending":
+        color = "#FF6F0E";
+        break;
+
+      case "validated":
+        color = "#0CB100";
+        break;
+
+      case "rejected":
+        color = "#DA0303";
+        break;
+      default:
+        break;
+    }
     const event = await Event.update(
       {
         status: req.body.status,
-        color: req.body.color,
+        color: color,
       },
       {
         where: {
@@ -113,9 +127,6 @@ const deleteEvent = async (req, res) => {
     });
     return res.status(200).send({
       message: "event deleted successfully",
-      data: {
-        id: req.body.id,
-      },
     });
   } catch (error) {
     return res.status(400).send({
