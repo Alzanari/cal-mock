@@ -57,7 +57,6 @@ export const event = {
         await axios.put("/event/status", {
           id: event.id,
           status: event.status,
-          color: event.color,
         });
         dispatch("fetchEvents");
       } catch (error) {

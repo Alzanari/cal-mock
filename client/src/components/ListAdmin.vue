@@ -138,26 +138,9 @@ export default {
       this.filter = status;
     },
     statusUpdate(eventId, status) {
-      let color = "";
-      switch (status) {
-        case "pending":
-          color = "#FF6F0E";
-          break;
-
-        case "validated":
-          color = "#0CB100";
-          break;
-
-        case "rejected":
-          color = "#DA0303";
-          break;
-        default:
-          break;
-      }
       this.$store.dispatch("event/updateStatus", {
         id: eventId,
         status: status,
-        color: color,
       });
     },
     showEditModal(event) {
