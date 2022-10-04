@@ -22,6 +22,8 @@
           ref="tableAdmin"
           striped
           hover
+          selectable
+          no-select-on-click
           :items="events"
           :fields="fields"
           :head-variant="headVariant"
@@ -30,17 +32,32 @@
           :current-page="currentPage"
         >
           <template v-slot:cell(select)="data">
-            <b-form-checkbox v-model="selected" :value="data.item" name="selected-rows" @change="onRowSelected()">
+            <b-form-checkbox
+              v-model="selected"
+              :value="data.item"
+              name="selected-rows"
+              @change="onRowSelected(data.index, data.rowSelected)"
+            >
             </b-form-checkbox>
           </template>
           <template v-slot:cell(update)="data">
-            <b-button id="pending" @click="statusUpdate(data.item.id, $event.target.id)">P</b-button>
-            <b-button id="validated" @click="statusUpdate(data.item.id, $event.target.id)" class="mx-1">V</b-button>
-            <b-button id="rejected" @click="statusUpdate(data.item.id, $event.target.id)">R</b-button>
+            <b-button v-if="globalSelect" id="pending" @click="statusUpdate(data.item.id, $event.target.id)"
+              >P</b-button
+            >
+            <b-button
+              v-if="globalSelect"
+              id="validated"
+              @click="statusUpdate(data.item.id, $event.target.id)"
+              class="mx-1"
+              >V</b-button
+            >
+            <b-button v-if="globalSelect" id="rejected" @click="statusUpdate(data.item.id, $event.target.id)"
+              >R</b-button
+            >
           </template>
           <template v-slot:cell(actions)="data">
-            <b-button @click="showEditModal(data.item)">Edit</b-button>
-            <b-button @click="showDeleteModal(data.item)" class="mx-1">Delete</b-button>
+            <b-button v-if="globalSelect" @click="showEditModal(data.item)">Edit</b-button>
+            <b-button v-if="globalSelect" @click="showDeleteModal(data.item)" class="mx-1">Delete</b-button>
           </template>
         </b-table>
         <b-modal id="editModal" ref="editEventModal" title="Edit Event" @ok.prevent="submitFromEditModal">
@@ -54,7 +71,18 @@
     </b-row>
     <b-row>
       <b-col class="d-flex">
-        <b-button id="export" @click="exportExcel" class="me-auto" pill variant="outline-success">Export</b-button>
+        <div class="me-auto">
+          <b-button-group v-if="!globalSelect">
+            <b-button id="deleteAll" @click="globalAction($event.target.id)">delete</b-button>
+            <b-button id="pendAll" @click="globalAction($event.target.id)" variant="warning">pending</b-button>
+            <b-button id="validateAll" @click="globalAction($event.target.id)" variant="success">validate</b-button>
+            <b-button id="rejectAll" @click="globalAction($event.target.id)" variant="danger">reject</b-button>
+          </b-button-group>
+          <b-button v-if="globalSelect" id="export" @click="exportExcel" pill variant="outline-success" class="mx-1"
+            >Export</b-button
+          >
+        </div>
+
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="my-auto"></b-pagination>
       </b-col>
     </b-row>
@@ -90,17 +118,18 @@ export default {
     events() {
       return this.$store.getters["event/eventsTable"];
     },
+    globalSelect() {
+      return this.selected.length == 0;
+    },
   },
   methods: {
-    onRowSelected() {
-      // TODO: fix rowSelection that change row's color
-      // let tableRef = this.$refs.tableAdmin;
-      // if (checked === false) {
-      //   tableRef.selectRow(index);
-      // } else {
-      //   tableRef.unselectRow(index);
-      // }
-      console.log("selected ", this.selected);
+    onRowSelected(index, checked) {
+      let tableRef = this.$refs.tableAdmin;
+      if (checked === false) {
+        tableRef.selectRow(index);
+      } else {
+        tableRef.unselectRow(index);
+      }
     },
     statusFilter(status) {
       if (status == "all") {
@@ -167,6 +196,30 @@ export default {
       const exportType = exportFromJSON.types.csv;
 
       exportFromJSON({ data, fileName, exportType });
+    },
+    globalAction(elementId) {
+      if (elementId === "deleteAll") {
+        this.selected.forEach((select) => {
+          this.$store.dispatch("event/deleteEvent", select);
+        });
+      }
+      if (elementId === "pendAll") {
+        this.selected.forEach((select) => {
+          this.statusUpdate(select.id, "pending");
+        });
+      }
+      if (elementId === "validateAll") {
+        this.selected.forEach((select) => {
+          this.statusUpdate(select.id, "validated");
+        });
+      }
+      if (elementId === "rejectAll") {
+        this.selected.forEach((select) => {
+          this.statusUpdate(select.id, "rejected");
+        });
+      }
+      this.selected = [];
+      this.$refs.tableAdmin.clearSelected();
     },
   },
 };

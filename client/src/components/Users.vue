@@ -12,9 +12,11 @@
     <b-row>
       <b-col>
         <b-table
-          ref="tableAdmin"
+          ref="userTableAdmin"
           striped
           hover
+          selectable
+          no-select-on-click
           :items="users"
           :fields="fields"
           :head-variant="headVariant"
@@ -23,21 +25,30 @@
           :current-page="currentPage"
         >
           <template v-slot:cell(select)="data">
-            <b-form-checkbox v-model="selected" :value="data.item" name="selected-rows" @change="onRowSelected()">
+            <b-form-checkbox
+              v-if="currentAdmin.id !== data.item.id"
+              v-model="selected"
+              :value="data.item"
+              name="selected-rows"
+              @change="onRowSelected(data.index, data.rowSelected)"
+            >
             </b-form-checkbox>
           </template>
           <template v-slot:cell(permissions)="data">
-            <b-button v-if="data.item.admin == 'No'" @click="setAdmin(data.item.id)">Add</b-button>
+            <b-button v-if="data.item.admin == 'No' && globalSelect" @click="setAdmin(data.item.id)">Add</b-button>
             <b-button
-              v-if="data.item.admin == 'Yes' && currentAdmin.id !== data.item.id"
+              v-if="data.item.admin == 'Yes' && currentAdmin.id !== data.item.id && globalSelect"
               @click="removeAdmin(data.item.id)"
               class="mx-1"
               >remove</b-button
             >
           </template>
           <template v-slot:cell(actions)="data">
-            <b-button @click="showEditModal(data.item)">Edit</b-button>
-            <b-button v-if="currentAdmin.id !== data.item.id" @click="showDeleteModal(data.item)" class="mx-1"
+            <b-button v-if="globalSelect" @click="showEditModal(data.item)">Edit</b-button>
+            <b-button
+              v-if="currentAdmin.id !== data.item.id && globalSelect"
+              @click="showDeleteModal(data.item)"
+              class="mx-1"
               >Delete</b-button
             >
           </template>
@@ -56,7 +67,14 @@
     </b-row>
     <b-row>
       <b-col class="d-flex">
-        <b-button id="export" @click="exportExcel" class="me-auto" pill variant="outline-success">Export</b-button>
+        <div class="me-auto">
+          <b-button-group v-if="!globalSelect">
+            <b-button id="deleteAll" @click="globalAction($event.target.id)">delete</b-button>
+          </b-button-group>
+          <b-button v-if="globalSelect" id="export" @click="exportExcel" pill variant="outline-success" class="mx-1"
+            >Export</b-button
+          >
+        </div>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="my-auto"></b-pagination>
       </b-col>
     </b-row>
@@ -97,17 +115,18 @@ export default {
     currentAdmin() {
       return this.$store.getters["auth/getUser"];
     },
+    globalSelect() {
+      return this.selected.length == 0;
+    },
   },
   methods: {
-    onRowSelected() {
-      // TODO: fix rowSelection that change row's color
-      // let tableRef = this.$refs.tableAdmin;
-      // if (checked === false) {
-      //   tableRef.selectRow(index);
-      // } else {
-      //   tableRef.unselectRow(index);
-      // }
-      console.log("selected ", this.selected);
+    onRowSelected(index, checked) {
+      let tableRef = this.$refs.userTableAdmin;
+      if (checked === false) {
+        tableRef.selectRow(index);
+      } else {
+        tableRef.unselectRow(index);
+      }
     },
     exportExcel() {
       const data = this.$store.getters["user/allUsers"];
@@ -145,7 +164,7 @@ export default {
       if (data) {
         this.$store.dispatch("user/addUser", data);
         this.$nextTick(() => {
-          this.$refs.addUserForm.hide();
+          this.$refs.addUserModal.hide();
         });
       }
     },
@@ -154,7 +173,7 @@ export default {
       if (data) {
         this.$store.dispatch("user/updateUser", data);
         this.$nextTick(() => {
-          this.$refs.editUserForm.hide();
+          this.$refs.editUserModal.hide();
         });
       }
     },
@@ -163,7 +182,16 @@ export default {
       if (data) {
         this.$store.dispatch("user/deleteUser", data);
         this.$nextTick(() => {
-          this.$refs.deleteUserForm.hide();
+          this.$refs.deleteUserModal.hide();
+        });
+      }
+    },
+    globalAction(elementId) {
+      if (elementId === "deleteAll") {
+        this.selected.forEach((select) => {
+          this.$store.dispatch("user/deleteUser", select);
+          this.selected = [];
+          this.$refs.userTableAdmin.clearSelected();
         });
       }
     },
