@@ -1,10 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">Task App</b-navbar-brand>
-      <b-nav-item-dropdown text="Lang" right style="visibility: hidden; width: max-content">
-        <b-dropdown-item href="#"></b-dropdown-item>
-      </b-nav-item-dropdown>
+      <b-navbar-brand href="/" class="mx-2"><b>Task App</b> </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

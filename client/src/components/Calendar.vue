@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-3 calendar">
+  <b-container class="my-3 calendar">
     <div class="mb-5">
       <b-button class="Bfix" pill variant="primary" v-b-modal.modal-add-event>Add Event</b-button>
       <b-modal
