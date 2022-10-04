@@ -48,11 +48,18 @@ const getAllUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const user = await User.update({
-      username: req.body.username,
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
-    });
+    const user = await User.update(
+      {
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    );
     res.status(200).send({
       message: "User updated successfully",
       data: user,
