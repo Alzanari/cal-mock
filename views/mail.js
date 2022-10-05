@@ -71,22 +71,22 @@ exports.sendEmail = function (from, to, subject, callback) {
           break;
       }
       if (template) {
-        email(template, userRec);
+        email(template, userRec, event.dataValues);
       }
     });
   }
 
   pending();
-  function email(template, user) {
+  function email(template, user, event) {
     let email = {
       from: "gutshellsing@gmail.com",
       to: user.email,
       subject: "testing nodemailer",
       template: template,
       context: {
-        event_name: user.username,
+        event_name: event.title,
         event_username: user.username,
-        event_date: user.end,
+        event_date: event.end,
       },
     };
     transporter.sendMail(email, function (error, info) {
