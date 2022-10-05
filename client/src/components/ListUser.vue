@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h2>Events table</h2>
+    <h2 class="my-2">Liste des tâches</h2>
     <b-row>
-      <b-col>
-        <b-button id="all" @click="statusFilter($event.target.id)" pill variant="outline-secondary">All</b-button>
+      <b-col class="my-2">
+        <b-button id="all" @click="statusFilter($event.target.id)" pill variant="outline-secondary">Tous</b-button>
         <b-button id="pending" @click="statusFilter($event.target.id)" pill class="mx-1" variant="warning"
-          >Pending</b-button
+          >En attente</b-button
         >
         <b-button id="validated" @click="statusFilter($event.target.id)" pill class="mx-1" variant="success"
-          >Validated</b-button
+          >Valide</b-button
         >
-        <b-button id="rejected" @click="statusFilter($event.target.id)" pill variant="danger">Rejected</b-button>
+        <b-button id="rejected" @click="statusFilter($event.target.id)" pill variant="danger">Rejeté</b-button>
       </b-col>
       <b-col cols="3">
         <b-form-input v-model="filter" type="search" placeholder="Seach"></b-form-input>
@@ -21,9 +21,12 @@
         <b-table
           striped
           hover
+          responsive
+          primary-key="id"
           :items="events"
           :fields="fields"
-          :head-variant="headVariant"
+          :sort-by.sync="sortBy"
+          :sort-desc.sync="sortDesc"
           :filter="filter"
           :per-page="perPage"
           :current-page="currentPage"
@@ -33,7 +36,7 @@
     </b-row>
     <b-row>
       <b-col class="d-flex">
-        <b-button id="export" @click="exportExcel" class="me-auto" pill variant="outline-success">Export</b-button>
+        <b-button id="export" @click="exportExcel" class="me-auto" pill variant="outline-success">Exporter</b-button>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="my-auto"></b-pagination>
       </b-col>
     </b-row>
@@ -48,7 +51,8 @@ export default {
   data() {
     return {
       fields: ["id", "user", "title", "comment", "start", "end", "allDay", "status"],
-      headVariant: "dark",
+      sortBy: "id",
+      sortDesc: true,
       filter: "",
       perPage: 10,
       currentPage: 1,

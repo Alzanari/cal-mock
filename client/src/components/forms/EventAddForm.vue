@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form ref="form" @submit.prevent="submit">
-      <b-form-group label="Title" label-for="input-title" invalid-feedback="Title is required">
+      <b-form-group label="Titre" label-for="input-title" invalid-feedback="Le titre est requis">
         <b-form-input
           id="input-title"
           v-model="event.title"
@@ -9,10 +9,10 @@
           required
         ></b-form-input>
       </b-form-group>
-      <b-form-group label="Comment" label-for="input-comment" invalid-feedback="Comment is required">
+      <b-form-group label="Commentaire" label-for="input-comment" invalid-feedback="Un commentaire est requis">
         <b-form-input id="input-comment" v-model="event.comment" :state="validateState($v.event.title)"></b-form-input>
       </b-form-group>
-      <b-form-group label="Start" label-for="input-start" invalid-feedback="Start is required">
+      <b-form-group label="Date de début" label-for="input-start" invalid-feedback="La date de début est requise">
         <b-form-input
           id="input-start"
           type="datetime-local"
@@ -21,10 +21,10 @@
           required
         ></b-form-input>
       </b-form-group>
-      <b-form-group label="End" label-for="input-end">
+      <b-form-group label="Date de fin" label-for="input-end">
         <b-form-input id="input-end" type="datetime-local" v-model="event.end"></b-form-input>
       </b-form-group>
-      <b-form-group class="d-flex mt-2" label="All Day?" label-for="allDay-input">
+      <b-form-group class="d-flex mt-2" label="Toute la journée?" label-for="allDay-input">
         <b-form-checkbox
           class="mx-3"
           id="allDay-input"
@@ -34,7 +34,7 @@
           unchecked-value="false"
         ></b-form-checkbox>
       </b-form-group>
-      <b-button type="submit" variant="primary" style="display: none">Submit</b-button>
+      <b-button type="submit" variant="primary" style="display: none">Soumettre</b-button>
     </b-form>
   </div>
 </template>

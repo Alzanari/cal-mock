@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h2>Users' table</h2>
+    <h2 class="my-2">Liste des utilisateurs</h2>
     <b-row>
-      <b-col>
-        <b-button pill variant="outline-secondary" @click="showAddModal()">Add new user</b-button>
+      <b-col class="my-2">
+        <b-button pill variant="outline-secondary" @click="showAddModal()">Ajouter un utilisateur</b-button>
       </b-col>
       <b-col cols="3">
-        <b-form-input v-model="filter" type="search" placeholder="Seach"></b-form-input>
+        <b-form-input v-model="filter" type="search" placeholder="Rechercher"></b-form-input>
       </b-col>
     </b-row>
     <b-row>
@@ -17,6 +17,8 @@
           hover
           selectable
           no-select-on-click
+          responsive
+          primary-key="id"
           :items="users"
           :fields="fields"
           :head-variant="headVariant"
@@ -35,19 +37,25 @@
             </b-form-checkbox>
           </template>
           <template v-slot:cell(permissions)="data">
-            <b-button v-if="data.item.admin == 'No' && globalSelect" @click="setAdmin(data.item.id)">Add</b-button>
+            <b-button
+              v-if="data.item.admin == 'No' && globalSelect"
+              @click="setAdmin(data.item.id)"
+              variant="outline-success"
+              ><font-awesome-icon icon="fa-solid fa-plus" color="green"
+            /></b-button>
             <b-button
               v-if="data.item.admin == 'Yes' && currentAdmin.id !== data.item.id && globalSelect"
               @click="removeAdmin(data.item.id)"
               class="mx-1"
-              >remove</b-button
-            >
+              variant="outline-danger"
+              ><font-awesome-icon icon="fa-solid fa-minus" color="red"
+            /></b-button>
           </template>
           <template v-slot:cell(actions)="data">
-            <b-button v-if="globalSelect" @click="showPassModal(data.item)">Password</b-button>
-            <b-button v-if="globalSelect" @click="showEditModal(data.item)" class="mx-1">Edit</b-button>
+            <b-button v-if="globalSelect" @click="showPassModal(data.item)">Mot de passe</b-button>
+            <b-button v-if="globalSelect" @click="showEditModal(data.item)" class="mx-1">Modifié</b-button>
             <b-button v-if="currentAdmin.id !== data.item.id && globalSelect" @click="showDeleteModal(data.item)"
-              >Delete</b-button
+              >Supprimé</b-button
             >
           </template>
         </b-table>
@@ -71,10 +79,10 @@
       <b-col class="d-flex">
         <div class="me-auto">
           <b-button-group v-if="!globalSelect">
-            <b-button id="deleteAll" @click="globalAction($event.target.id)">delete</b-button>
+            <b-button id="deleteAll" @click="globalAction($event.target.id)">Supprimé</b-button>
           </b-button-group>
           <b-button v-if="globalSelect" id="export" @click="exportExcel" pill variant="outline-success" class="mx-1"
-            >Export</b-button
+            >Exporter</b-button
           >
         </div>
         <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" class="my-auto"></b-pagination>
@@ -100,7 +108,7 @@ export default {
   },
   data() {
     return {
-      fields: ["select", "id", "username", "email", "admin", "permissions", "actions"],
+      fields: ["sélection", "id", "username", "email", "admin", "permissions", "actions"],
       headVariant: "dark",
       filter: "",
       perPage: 10,

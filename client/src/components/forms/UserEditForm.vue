@@ -5,9 +5,9 @@
         <b-form-input id="input-id" v-model="user.id" readonly></b-form-input>
       </b-form-group>
       <b-form-group
-        label="Username"
+        label="Nom d'utilisateur"
         label-for="input-username"
-        invalid-feedback="Username is required and must be at least 6 characters"
+        invalid-feedback="Le nom d'utilisateur est obligatoire et doit comporter au moins 6 caractères."
       >
         <b-form-input
           id="input-username"
@@ -16,7 +16,11 @@
           required
         ></b-form-input>
       </b-form-group>
-      <b-form-group label="Email" label-for="input-email" invalid-feedback="Email is required and must in email format">
+      <b-form-group
+        label="E-mail"
+        label-for="input-email"
+        invalid-feedback="L'e-mail est obligatoire et doit avoir le format d'e-mail"
+      >
         <b-form-input
           id="input-email"
           v-model="user.email"

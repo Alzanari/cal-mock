@@ -13,7 +13,7 @@
             <template #button-content>
               <em class="text-light font-weight-bold mx-1">{{ getUser.username }}</em>
             </template>
-            <b-dropdown-item href="#" @click="logout">Sign Out</b-dropdown-item>
+            <b-dropdown-item href="#" @click="logout">Se déconnecter</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>

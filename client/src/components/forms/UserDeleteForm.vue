@@ -3,7 +3,7 @@
     <b-form ref="form" @submit.prevent="submit">
       <div class="mt-1">
         <p>
-          This will delete the following user: <strong>{{ user.username }}</strong>
+          L'utilisateur suivant sera supprimé: <strong>{{ user.username }}</strong>
         </p>
       </div>
       <b-form-group label="Id" label-for="input-id" style="display: none">

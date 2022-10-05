@@ -4,13 +4,13 @@
       <b-form-group label="Id" label-for="input-id">
         <b-form-input id="input-id" v-model="user.id" readonly></b-form-input>
       </b-form-group>
-      <b-form-group label="Username" label-for="input-username">
+      <b-form-group label="Nom d'utilisateur" label-for="input-username">
         <b-form-input id="input-username" v-model="user.username" readonly></b-form-input>
       </b-form-group>
       <b-form-group
-        label="Password"
+        label="Mot de passe"
         label-for="input-password"
-        invalid-feedback="Password is required and must be at least 8 characters."
+        invalid-feedback="Le mot de passe est obligatoire et doit comporter au moins 8 caractères."
       >
         <b-form-input
           id="input-password"
@@ -22,9 +22,9 @@
         ></b-form-input>
       </b-form-group>
       <b-form-group
-        label="Password Confirmation"
+        label="Confirmation mot de passe"
         label-for="input-password_conf"
-        invalid-feedback="Password Confirmation is required and must match Password."
+        invalid-feedback="La confirmation du mot de passe est obligatoire et doit être identique au mot de passe."
       >
         <b-form-input
           id="input-password_conf"

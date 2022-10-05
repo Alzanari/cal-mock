@@ -4,22 +4,22 @@
       <li class="nav-item">
         <router-link to="/calendar" class="nav-link py-3 border-bottom">
           <font-awesome-icon icon="fa-solid fa-calendar-days" />
-          <small>Calendar</small>
+          <small>Calendrier</small>
         </router-link>
       </li>
       <li>
         <router-link v-if="!isAdmin" to="/list-view" class="nav-link py-3 border-bottom">
-          <font-awesome-icon icon="fa-solid fa-list" /> <small>List</small>
+          <font-awesome-icon icon="fa-solid fa-list" /> <small>Liste</small>
         </router-link>
       </li>
       <li>
         <router-link v-if="isAdmin" to="/list-adm" class="nav-link py-3 border-bottom">
-          <font-awesome-icon icon="fa-solid fa-list" /> <small>List</small>
+          <font-awesome-icon icon="fa-solid fa-list" /> <small>Liste</small>
         </router-link>
       </li>
       <li>
         <router-link v-if="isAdmin" to="/users" class="nav-link py-3 border-bottom">
-          <font-awesome-icon icon="fa-solid fa-users" /> <small>Users</small>
+          <font-awesome-icon icon="fa-solid fa-users" /> <small>Utilisateurs</small>
         </router-link>
       </li>
     </ul>

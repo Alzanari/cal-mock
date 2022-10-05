@@ -1,9 +1,11 @@
 <template>
   <b-container class="my-3 calendar">
     <div class="mb-5 d-flex">
-      <b-button pill class="me-auto" variant="primary" @click="showAddModal()">Add Event</b-button>
+      <b-button pill class="me-auto" variant="primary" @click="showAddModal()">Ajouter un évènement</b-button>
       <div>
-        <b-form-checkbox @change="toggleWeekends()" switch><span class="mx-1">Hide weekends</span></b-form-checkbox>
+        <b-form-checkbox @change="toggleWeekends()" switch
+          ><span class="mx-1">Masquer les week-ends</span></b-form-checkbox
+        >
       </div>
     </div>
     <b-modal
@@ -87,6 +89,14 @@ export default {
 
     configOptions() {
       return {
+        locale: "fr",
+        buttonText: {
+          today: "Aujourd'hui",
+          month: "mois",
+          week: "semaine",
+          day: "jour",
+          list: "liste",
+        },
         editable: false,
         selectable: false,
         selectMirror: false,

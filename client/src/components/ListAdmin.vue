@@ -1,19 +1,19 @@
 <template>
   <div>
-    <h2>Events table</h2>
+    <h2 class="my-2">Liste des tâches</h2>
     <b-row>
-      <b-col>
-        <b-button id="all" @click="statusFilter($event.target.id)" pill variant="outline-secondary">All</b-button>
+      <b-col class="my-2">
+        <b-button id="all" @click="statusFilter($event.target.id)" pill variant="outline-secondary">Tous</b-button>
         <b-button id="pending" @click="statusFilter($event.target.id)" pill class="mx-1" variant="warning"
-          >Pending</b-button
+          >En attente</b-button
         >
         <b-button id="validated" @click="statusFilter($event.target.id)" pill class="mx-1" variant="success"
-          >Validated</b-button
+          >Valide</b-button
         >
-        <b-button id="rejected" @click="statusFilter($event.target.id)" pill variant="danger">Rejected</b-button>
+        <b-button id="rejected" @click="statusFilter($event.target.id)" pill variant="danger">Rejeté</b-button>
       </b-col>
       <b-col cols="3">
-        <b-form-input v-model="filter" type="search" placeholder="Seach"></b-form-input>
+        <b-form-input v-model="filter" type="search" placeholder="Rechercher"></b-form-input>
       </b-col>
     </b-row>
     <b-row>
@@ -24,9 +24,12 @@
           hover
           selectable
           no-select-on-click
+          responsive
+          primary-key="id"
           :items="events"
           :fields="fields"
-          :head-variant="headVariant"
+          :sort-by.sync="sortBy"
+          :sort-desc.sync="sortDesc"
           :filter="filter"
           :per-page="perPage"
           :current-page="currentPage"
@@ -65,8 +68,8 @@
             /></b-button>
           </template>
           <template v-slot:cell(actions)="data">
-            <b-button v-if="globalSelect" @click="showEditModal(data.item)">Edit</b-button>
-            <b-button v-if="globalSelect" @click="showDeleteModal(data.item)" class="mx-1">Delete</b-button>
+            <b-button v-if="globalSelect" @click="showEditModal(data.item)">Modifié</b-button>
+            <b-button v-if="globalSelect" @click="showDeleteModal(data.item)" class="mx-1">Supprimé</b-button>
           </template>
         </b-table>
         <b-modal id="editModal" ref="editEventModal" title="Edit Event" @ok.prevent="submitFromEditModal">
@@ -82,13 +85,13 @@
       <b-col class="d-flex">
         <div class="me-auto">
           <b-button-group v-if="!globalSelect">
-            <b-button id="deleteAll" @click="globalAction($event.target.id)">delete</b-button>
-            <b-button id="pendAll" @click="globalAction($event.target.id)" variant="warning">pending</b-button>
-            <b-button id="validateAll" @click="globalAction($event.target.id)" variant="success">validate</b-button>
-            <b-button id="rejectAll" @click="globalAction($event.target.id)" variant="danger">reject</b-button>
+            <b-button id="deleteAll" @click="globalAction($event.target.id)">Supprimé</b-button>
+            <b-button id="pendAll" @click="globalAction($event.target.id)" variant="warning">En attente</b-button>
+            <b-button id="validateAll" @click="globalAction($event.target.id)" variant="success">Valide</b-button>
+            <b-button id="rejectAll" @click="globalAction($event.target.id)" variant="danger">Rejeté</b-button>
           </b-button-group>
           <b-button v-if="globalSelect" id="export" @click="exportExcel" pill variant="outline-success" class="mx-1"
-            >Export</b-button
+            >Exporter</b-button
           >
         </div>
 
@@ -112,7 +115,8 @@ export default {
   data() {
     return {
       fields: ["select", "id", "user", "title", "comment", "start", "end", "allDay", "status", "update", "actions"],
-      headVariant: "dark",
+      sortBy: "id",
+      sortDesc: true,
       filter: "",
       perPage: 10,
       currentPage: 1,

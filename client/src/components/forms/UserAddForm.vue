@@ -2,9 +2,9 @@
   <div>
     <b-form ref="form" @submit.prevent="submit">
       <b-form-group
-        label="Username"
+        label="Nom d'utilisateur"
         label-for="input-username"
-        invalid-feedback="Username is required and must be at least 6 characters."
+        invalid-feedback="Le nom d'utilisateur est obligatoire et doit comporter au moins 6 caractères."
       >
         <b-form-input
           id="input-username"
@@ -14,9 +14,9 @@
         ></b-form-input>
       </b-form-group>
       <b-form-group
-        label="Email"
+        label="E-mail"
         label-for="input-email"
-        invalid-feedback="Email is required and must have email format"
+        invalid-feedback="L'e-mail est obligatoire et doit avoir le format d'e-mail"
       >
         <b-form-input
           id="input-email"
@@ -26,9 +26,9 @@
         ></b-form-input>
       </b-form-group>
       <b-form-group
-        label="Password"
+        label="Mot de passe"
         label-for="input-password"
-        invalid-feedback="Password is required and must be at least 8 characters."
+        invalid-feedback="Le mot de passe est obligatoire et doit comporter au moins 8 caractères."
       >
         <b-form-input
           id="input-password"

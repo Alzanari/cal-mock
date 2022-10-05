@@ -16,6 +16,22 @@ export const event = {
       state.events.forEach((event) => {
         let start = moment(event.start).format("YYYY-MM-DD HH:MM");
         let end = event.end ? moment(event.end).format("YYYY-MM-DD HH:MM") : "";
+        let status = "";
+        switch (event.status) {
+          case "pending":
+            status = "En attente";
+            break;
+
+          case "validated":
+            status = "Valide";
+            break;
+
+          case "rejected":
+            status = "Rejeté";
+            break;
+          default:
+            break;
+        }
         let modified = {
           id: event.id,
           user: event.User.username,
@@ -24,7 +40,7 @@ export const event = {
           start: start,
           end: end,
           allDay: event.allDay,
-          status: event.status,
+          status: status,
         };
         items.push(modified);
       });

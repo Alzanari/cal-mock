@@ -3,7 +3,7 @@
     <b-form ref="form" @submit.prevent="submit">
       <div class="mt-1">
         <p>
-          This will delete the following event: <strong>{{ event.title }}</strong>
+          L'événement suivant sera supprimé: <strong>{{ event.title }}</strong>
         </p>
       </div>
       <b-form-group label="Id" label-for="input-id" style="display: none">

@@ -12,21 +12,21 @@
             </svg>
           </div>
           <b-form @submit.prevent="login">
-            <b-form-group id="input-username" label="Username:" label-for="input-username">
+            <b-form-group id="input-username" label="Nom d'utilisateur:" label-for="input-username">
               <b-form-input
                 id="input-username"
                 type="text"
                 v-model="username"
-                placeholder="Enter username"
+                placeholder="Saisissez votre nom d'utilisateur"
                 required
               ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-password" label="Password:" label-for="input-password">
+            <b-form-group id="input-password" label="Mot de passe:" label-for="input-password">
               <b-form-input id="input-password" type="password" v-model="password" required></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary" class="my-3">Submit</b-button>
+            <b-button type="submit" variant="primary" class="my-3">Connexion</b-button>
           </b-form>
         </b-card>
       </b-col>
