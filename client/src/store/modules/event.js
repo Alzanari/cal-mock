@@ -87,12 +87,12 @@ export const event = {
         console.error(error);
       }
     },
-    setweekendsVisible({ commit }, enabled) {
-      return commit("setweekendsEnabled", enabled);
+    setWeekendsVisible({ commit }, enabled) {
+      return commit("setWeekends", enabled);
     },
   },
   mutations: {
     setEvents: (state, events) => (state.events = events),
-    setweekendsEnabled: (state, enabled) => (state.weekendsVisible = enabled),
+    setWeekends: (state, enabled) => (state.weekendsVisible = enabled),
   },
 };

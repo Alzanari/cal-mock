@@ -1,7 +1,10 @@
 <template>
   <b-container class="my-3 calendar">
-    <div class="mb-5">
-      <b-button pill variant="primary" @click="showAddModal()">Add Event</b-button>
+    <div class="mb-5 d-flex">
+      <b-button pill class="me-auto" variant="primary" @click="showAddModal()">Add Event</b-button>
+      <div>
+        <b-form-checkbox @change="toggleWeekends()" switch><span class="mx-1">Hide weekends</span></b-form-checkbox>
+      </div>
     </div>
     <b-modal
       ref="addEventModal"
@@ -60,6 +63,7 @@ export default {
       },
       currentEvent: null,
       isSidebarOpen: false,
+      weekends: true,
     };
   },
   components: {
@@ -104,6 +108,7 @@ export default {
         },
         initialView: "dayGridMonth",
         events: this.allEvents,
+        weekends: this.weekendsVisible,
       };
     },
 
@@ -117,6 +122,10 @@ export default {
     onEventClick({ event }) {
       this.currentEvent = event._def;
       this.isSidebarOpen = true;
+    },
+    toggleWeekends() {
+      this.weekends = !this.weekends;
+      this.$store.dispatch("event/setWeekendsVisible", this.weekends);
     },
     showAddModal() {
       this.$refs.addEventModal.show();
