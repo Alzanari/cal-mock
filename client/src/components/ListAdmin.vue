@@ -1,6 +1,15 @@
 <template>
   <div>
     <h2 class="my-2">Liste des tâches</h2>
+    <b-alert
+      v-model="showBottom"
+      class="position-fixed fixed-bottom m-0 rounded-0"
+      style="z-index: 2000"
+      variant="warning"
+      dismissible
+    >
+      L'action n'a pas réussi
+    </b-alert>
     <b-row>
       <b-col class="my-2">
         <b-button id="all" @click="statusFilter($event.target.id)" pill variant="outline-secondary">Tous</b-button>
@@ -126,6 +135,7 @@ export default {
       currentPage: 1,
       currentEvent: null,
       selected: [],
+      showBottom: false,
     };
   },
   computed: {
@@ -156,10 +166,16 @@ export default {
     },
     statusUpdate(eventId, status) {
       console.log(status);
-      this.$store.dispatch("event/updateStatus", {
-        id: eventId,
-        status: status,
-      });
+      this.$store
+        .dispatch("event/updateStatus", {
+          id: eventId,
+          status: status,
+        })
+        .then((value) => {
+          if (value.status !== 200 || value.status !== 401) {
+            this.showBottom = true;
+          }
+        });
     },
     showEditModal(event) {
       let task = JSON.parse(JSON.stringify(event));
@@ -175,7 +191,11 @@ export default {
       const data = this.$refs.editEventForm.submit();
       // console.log(data);
       if (data) {
-        this.$store.dispatch("event/updateEvent", data);
+        this.$store.dispatch("event/updateEvent", data).then((value) => {
+          if (value.status !== 200 || value.status !== 401) {
+            this.showBottom = true;
+          }
+        });
         this.$nextTick(() => {
           this.$refs.editEventModal.hide();
         });
@@ -185,7 +205,11 @@ export default {
       const data = this.$refs.deleteEventForm.submit();
       // console.log(data);
       if (data) {
-        this.$store.dispatch("event/deleteEvent", data);
+        this.$store.dispatch("event/deleteEvent", data).then((value) => {
+          if (value.status !== 200 || value.status !== 401) {
+            this.showBottom = true;
+          }
+        });
         this.$nextTick(() => {
           this.$refs.deleteEventModal.hide();
         });
@@ -201,22 +225,38 @@ export default {
     globalAction(elementId) {
       if (elementId === "deleteAll") {
         this.selected.forEach((select) => {
-          this.$store.dispatch("event/deleteEvent", select);
+          this.$store.dispatch("event/deleteEvent", select).then((value) => {
+            if (value.status !== 200 || value.status !== 401) {
+              this.showBottom = true;
+            }
+          });
         });
       }
       if (elementId === "pendAll") {
         this.selected.forEach((select) => {
-          this.statusUpdate(select.id, "pending");
+          this.statusUpdate(select.id, "pending").then((value) => {
+            if (value.status !== 200 || value.status !== 401) {
+              this.showBottom = true;
+            }
+          });
         });
       }
       if (elementId === "validateAll") {
         this.selected.forEach((select) => {
-          this.statusUpdate(select.id, "validated");
+          this.statusUpdate(select.id, "validated").then((value) => {
+            if (value.status !== 200 || value.status !== 401) {
+              this.showBottom = true;
+            }
+          });
         });
       }
       if (elementId === "rejectAll") {
         this.selected.forEach((select) => {
-          this.statusUpdate(select.id, "rejected");
+          this.statusUpdate(select.id, "rejected").then((value) => {
+            if (value.status !== 200 || value.status !== 401) {
+              this.showBottom = true;
+            }
+          });
         });
       }
       this.selected = [];

@@ -36,60 +36,66 @@ export const user = {
     },
     async updateUser({ dispatch }, user) {
       try {
-        await axios.put("/user/update", {
+        const us = await axios.put("/user/update", {
           id: user.id,
           username: user.username,
           email: user.email,
         });
         dispatch("fetchUsers");
+        return await Promise.resolve(us);
       } catch (error) {
         console.error(error);
       }
     },
     async updatePassword({ dispatch }, user) {
       try {
-        await axios.put("/user/update", {
+        const us = await axios.put("/user/update", {
           id: user.id,
           password: user.password,
           password_conf: user.password_conf,
         });
         dispatch("fetchUsers");
+        return await Promise.resolve(us);
       } catch (error) {
         console.error(error);
       }
     },
     async setAdmin({ dispatch }, user) {
       try {
-        await axios.put("/user/setAdmin", {
+        const us = await axios.put("/user/setAdmin", {
           id: user.id,
         });
         dispatch("fetchUsers");
+        return await Promise.resolve(us);
       } catch (error) {
         console.error(error);
       }
     },
     async removeAdmin({ dispatch }, user) {
       try {
-        await axios.put("/user/removeAdmin", {
+        const us = await axios.put("/user/removeAdmin", {
           id: user.id,
         });
         dispatch("fetchUsers");
+        return await Promise.resolve(us);
       } catch (error) {
         console.error(error);
       }
     },
     async deleteUser({ dispatch }, user) {
       try {
-        await axios.delete("/user/delete", { data: { id: user.id } });
+        const us = await axios.delete("/user/delete", { data: { id: user.id } });
         dispatch("fetchUsers");
+        return await Promise.resolve(us);
       } catch (error) {
         console.error(error);
       }
     },
     async addUser({ dispatch }, user) {
       try {
-        await axios.post("/auth/signup", user);
+        const us = await axios.post("/auth/signup", user);
         dispatch("fetchUsers");
+        return await Promise.resolve(us);
       } catch (error) {
         console.error(error);
       }

@@ -151,7 +151,11 @@ export default {
       const data = this.$refs.addEventForm.submit();
       // console.log(data);
       if (data) {
-        this.$store.dispatch("event/addEvent", data);
+        this.$store.dispatch("event/addEvent", data).then((value) => {
+          if (value.status !== 200 || value.status !== 401) {
+            this.showTop = true;
+          }
+        });
         this.$nextTick(() => {
           this.$refs.addEventModal.hide();
         });
