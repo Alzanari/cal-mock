@@ -41,19 +41,28 @@
             </b-form-checkbox>
           </template>
           <template v-slot:cell(update)="data">
-            <b-button v-if="globalSelect" id="pending" @click="statusUpdate(data.item.id, $event.target.id)"
-              >P</b-button
-            >
             <b-button
               v-if="globalSelect"
+              variant="outline-warning"
+              id="pending"
+              @click="statusUpdate(data.item.id, $event.target.id)"
+              ><font-awesome-icon icon="fa-solid fa-spinner" color="orange"
+            /></b-button>
+            <b-button
+              v-if="globalSelect"
+              variant="outline-success"
               id="validated"
               @click="statusUpdate(data.item.id, $event.target.id)"
               class="mx-1"
-              >V</b-button
-            >
-            <b-button v-if="globalSelect" id="rejected" @click="statusUpdate(data.item.id, $event.target.id)"
-              >R</b-button
-            >
+              ><font-awesome-icon icon="fa-solid fa-check" color="green"
+            /></b-button>
+            <b-button
+              v-if="globalSelect"
+              variant="outline-danger"
+              id="rejected"
+              @click="statusUpdate(data.item.id, $event.target.id)"
+              ><font-awesome-icon icon="fa-solid fa-xmark" color="red"
+            /></b-button>
           </template>
           <template v-slot:cell(actions)="data">
             <b-button v-if="globalSelect" @click="showEditModal(data.item)">Edit</b-button>
