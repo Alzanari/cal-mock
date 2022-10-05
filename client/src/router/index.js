@@ -4,9 +4,12 @@ import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import Calendar from "../components/Calendar.vue";
 import ListUser from "../components/ListUser.vue";
+import ListAdmin from "../components/ListAdmin.vue";
+import Users from "../components/Users.vue";
+
 // lazy-loaded
-const Users = () => import("../components/Users.vue");
-const ListAdmin = () => import("../components/ListAdmin.vue");
+// const Users = () => import("../components/Users.vue");
+// const ListAdmin = () => import("../components/ListAdmin.vue");
 
 Vue.use(VueRouter);
 
@@ -27,13 +30,11 @@ const routes = [
       {
         path: "list-adm",
         name: "list-adm",
-        // lazy-loaded
         component: ListAdmin,
       },
       {
         path: "users",
         name: "users",
-        // lazy-loaded
         component: Users,
       },
     ],
