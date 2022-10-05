@@ -46,7 +46,7 @@
               variant="outline-warning"
               id="pending"
               @click="statusUpdate(data.item.id, $event.target.id)"
-              ><font-awesome-icon icon="fa-solid fa-spinner" color="orange"
+              ><font-awesome-icon icon="fa-solid fa-spinner" color="orange" @click.prevent
             /></b-button>
             <b-button
               v-if="globalSelect"
@@ -147,6 +147,7 @@ export default {
       this.filter = status;
     },
     statusUpdate(eventId, status) {
+      console.log(status);
       this.$store.dispatch("event/updateStatus", {
         id: eventId,
         status: status,
@@ -217,4 +218,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+button > svg {
+  pointer-events: none;
+}
+</style>
