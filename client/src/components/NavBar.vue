@@ -11,7 +11,9 @@
           <b-nav-item-dropdown right class="mx-3">
             <!-- Using 'button-content' slot -->
             <template #button-content>
-              <em class="text-light font-weight-bold mx-1">{{ getUser.username }}</em>
+              <b
+                ><em class="text-light font-weight-bold mx-1">{{ getUser.username }}</em></b
+              >
             </template>
             <b-dropdown-item href="#" @click="logout">Se déconnecter</b-dropdown-item>
           </b-nav-item-dropdown>

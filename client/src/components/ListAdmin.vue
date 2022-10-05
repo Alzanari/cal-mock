@@ -68,8 +68,12 @@
             /></b-button>
           </template>
           <template v-slot:cell(actions)="data">
-            <b-button v-if="globalSelect" @click="showEditModal(data.item)">Modifié</b-button>
-            <b-button v-if="globalSelect" @click="showDeleteModal(data.item)" class="mx-1">Supprimé</b-button>
+            <b-button v-if="globalSelect" @click="showEditModal(data.item)" variant="outline-secondary"
+              >Modifié</b-button
+            >
+            <b-button v-if="globalSelect" @click="showDeleteModal(data.item)" variant="outline-dark" class="mx-1"
+              >Supprimé</b-button
+            >
           </template>
         </b-table>
         <b-modal id="editModal" ref="editEventModal" title="Edit Event" @ok.prevent="submitFromEditModal">
@@ -225,5 +229,23 @@ export default {
 <style scoped>
 button > svg {
   pointer-events: none;
+}
+button:hover > .fa-spinner {
+  color: white;
+}
+.fa-spinner:hover {
+  color: white;
+}
+button:hover > .fa-check {
+  color: white;
+}
+.fa-check:hover {
+  color: white;
+}
+button:hover > .fa-xmark {
+  color: white;
+}
+.fa-xmark:hover {
+  color: white;
 }
 </style>

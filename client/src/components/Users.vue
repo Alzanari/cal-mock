@@ -40,21 +40,29 @@
             <b-button
               v-if="data.item.admin == 'No' && globalSelect"
               @click="setAdmin(data.item.id)"
+              class="mx-auto"
               variant="outline-success"
               ><font-awesome-icon icon="fa-solid fa-plus" color="green"
             /></b-button>
             <b-button
               v-if="data.item.admin == 'Yes' && currentAdmin.id !== data.item.id && globalSelect"
               @click="removeAdmin(data.item.id)"
-              class="mx-1"
+              class="mx-auto"
               variant="outline-danger"
               ><font-awesome-icon icon="fa-solid fa-minus" color="red"
             /></b-button>
           </template>
           <template v-slot:cell(actions)="data">
-            <b-button v-if="globalSelect" @click="showPassModal(data.item)">Mot de passe</b-button>
-            <b-button v-if="globalSelect" @click="showEditModal(data.item)" class="mx-1">Modifié</b-button>
-            <b-button v-if="currentAdmin.id !== data.item.id && globalSelect" @click="showDeleteModal(data.item)"
+            <b-button v-if="globalSelect" @click="showPassModal(data.item)" variant="outline-info"
+              >Mot de passe</b-button
+            >
+            <b-button v-if="globalSelect" @click="showEditModal(data.item)" variant="outline-secondary" class="mx-1"
+              >Modifié</b-button
+            >
+            <b-button
+              v-if="currentAdmin.id !== data.item.id && globalSelect"
+              @click="showDeleteModal(data.item)"
+              variant="outline-dark"
               >Supprimé</b-button
             >
           </template>
@@ -225,4 +233,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+button:hover > .fa-plus {
+  color: white;
+}
+.fa-plus:hover {
+  color: white;
+}
+button:hover > .fa-minus {
+  color: white;
+}
+.fa-minus:hover {
+  color: white;
+}
+</style>

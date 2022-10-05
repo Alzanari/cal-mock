@@ -55,10 +55,10 @@ body {
   background-color: #52525240 !important;
 }
 .nav-link .svg-inline--fa {
-  transition: all 1s;
+  transition: all 0.5s;
   font-size: 20px;
 }
 .nav-link:hover .svg-inline--fa {
-  transform: rotate(360deg);
+  transform: scale(1.3, 1.3);
 }
 </style>
