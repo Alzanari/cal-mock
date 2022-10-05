@@ -44,15 +44,17 @@
             >
           </template>
           <template v-slot:cell(actions)="data">
-            <b-button v-if="globalSelect" @click="showEditModal(data.item)">Edit</b-button>
-            <b-button
-              v-if="currentAdmin.id !== data.item.id && globalSelect"
-              @click="showDeleteModal(data.item)"
-              class="mx-1"
+            <b-button v-if="globalSelect" @click="showPassModal(data.item)">Password</b-button>
+            <b-button v-if="globalSelect" @click="showEditModal(data.item)" class="mx-1">Edit</b-button>
+            <b-button v-if="currentAdmin.id !== data.item.id && globalSelect" @click="showDeleteModal(data.item)"
               >Delete</b-button
             >
           </template>
         </b-table>
+        <b-modal ref="editPassModal" title="Edit User's Password" @ok.prevent="submitFromPassModal">
+          <PassForm ref="editPassForm" :user="currentUser" />
+        </b-modal>
+
         <b-modal ref="editUserModal" title="Edit User" @ok.prevent="submitFromEditModal">
           <EditForm ref="editUserForm" :user="currentUser" />
         </b-modal>
@@ -83,6 +85,7 @@
 
 <script>
 import EditForm from "./forms/UserEditForm.vue";
+import PassForm from "./forms/UserPassForm.vue";
 import DeleteForm from "./forms/UserDeleteForm.vue";
 import AddForm from "./forms/UserAddForm.vue";
 import exportFromJSON from "export-from-json";
@@ -91,6 +94,7 @@ export default {
   name: "ListUser",
   components: {
     EditForm,
+    PassForm,
     DeleteForm,
     AddForm,
   },
@@ -148,6 +152,11 @@ export default {
     showAddModal() {
       this.$refs.addUserModal.show();
     },
+    showPassModal(user) {
+      let task = JSON.parse(JSON.stringify(user));
+      this.currentUser = task;
+      this.$refs.editPassModal.show();
+    },
     showEditModal(user) {
       let task = JSON.parse(JSON.stringify(user));
       this.currentUser = task;
@@ -165,6 +174,15 @@ export default {
         this.$store.dispatch("user/addUser", data);
         this.$nextTick(() => {
           this.$refs.addUserModal.hide();
+        });
+      }
+    },
+    submitFromPassModal() {
+      const data = this.$refs.editPassForm.submit();
+      if (data) {
+        this.$store.dispatch("user/updatePassword", data);
+        this.$nextTick(() => {
+          this.$refs.editPassModal.hide();
         });
       }
     },

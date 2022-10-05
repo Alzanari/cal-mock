@@ -5,7 +5,15 @@ const addEventBodyRules = [
   body("comment").notEmpty().isString(),
   body("start").notEmpty().isISO8601(),
   body("end").optional({ nullable: true, checkFalsy: true }).isISO8601(),
-  body("allDay").notEmpty().isNumeric(),
+  body("allDay")
+    .optional({ checkFalsy: true })
+    .custom((value) => {
+      if (value == 0 || value == 1) {
+        return value;
+      } else {
+        throw new Error("Allday is either 1 or 0");
+      }
+    }),
 ];
 
 const updateEventBodyRules = [
@@ -24,8 +32,7 @@ const updateEventBodyRules = [
   body("start").notEmpty().isISO8601(),
   body("end").optional({ checkFalsy: true }).isISO8601(),
   body("allDay")
-    .notEmpty()
-    .isNumeric()
+    .optional({ checkFalsy: true })
     .custom((value) => {
       if (value == 0 || value == 1) {
         return value;

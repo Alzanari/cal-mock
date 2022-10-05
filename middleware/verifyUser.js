@@ -1,5 +1,16 @@
 const { body, validationResult } = require("express-validator");
 
+const addUserBodyRoles = [
+  body("username")
+    .notEmpty()
+    .trim()
+    .escape()
+    .isLength({ min: 6 })
+    .withMessage("User name must be 6 or more characters"),
+  body("email").notEmpty().trim().escape().isEmail().withMessage("Email is not valid"),
+  body("password").isLength({ min: 8 }).withMessage("Password must be 8 or more characters"),
+];
+
 const UserBodyRules = [
   body("username")
     .notEmpty()
@@ -51,6 +62,7 @@ const checkRules = (req, res, next) => {
 };
 
 const verifyUser = {
+  addUserBodyRoles,
   UserBodyRules,
   passwordCheckBodyRules,
   idCheckBodyRules,

@@ -37,9 +37,21 @@ export const user = {
     async updateUser({ dispatch }, user) {
       try {
         await axios.put("/user/update", {
+          id: user.id,
           username: user.username,
           email: user.email,
+        });
+        dispatch("fetchUsers");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async updatePassword({ dispatch }, user) {
+      try {
+        await axios.put("/user/update", {
+          id: user.id,
           password: user.password,
+          password_conf: user.password_conf,
         });
         dispatch("fetchUsers");
       } catch (error) {

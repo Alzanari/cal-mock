@@ -8,7 +8,7 @@ const auth = require("../config/auth");
 // router.post("/signup", [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted, authJwt.verifyToken, authJwt.isAdmin], controller.signup);
 router.post(
   "/signup",
-  [verifyUser.UserBodyRules, verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted],
+  [verifyUser.addUserBodyRoles, verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted],
   controller.signup
 );
 

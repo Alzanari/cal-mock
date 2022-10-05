@@ -1,61 +1,17 @@
 <template>
   <b-container class="my-3 calendar">
     <div class="mb-5">
-      <b-button class="Bfix" pill variant="primary" v-b-modal.modal-add-event>Add Event</b-button>
-      <b-modal
-        id="modal-add-event"
-        ref="modal"
-        title="Add Event"
-        @show="resetModal"
-        @hidden="resetModal"
-        @ok="handleOk"
-      >
-        <form ref="form" @submit.stop.prevent="handleSubmit">
-          <b-form-group label="Title" label-for="title-input" invalid-feedback="Title is required" :state="titleState">
-            <b-form-input id="title-input" v-model="title" :state="titleState" required></b-form-input>
-          </b-form-group>
-          <b-form-group
-            label="Comment"
-            label-for="comment-input"
-            invalid-feedback="Comment is required"
-            :state="commentState"
-          >
-            <b-form-input id="comment-input" v-model="comment" :state="commentState" required></b-form-input>
-          </b-form-group>
-          <div class="d-flex">
-            <b-form-group
-              label="Start"
-              label-for="start-input"
-              invalid-feedback="Start is required"
-              :state="startState"
-            >
-              <input
-                class="form-control"
-                type="datetime-local"
-                id="start-input"
-                v-model="start"
-                :state="startState"
-                required
-              />
-            </b-form-group>
-            <b-form-group class="mx-auto" label="End" label-for="end-input" :state="endState">
-              <input class="form-control" type="datetime-local" id="end-input" v-model="end" :state="endState" />
-            </b-form-group>
-          </div>
-          <b-form-group class="d-flex mt-2" label="All Day?" label-for="allDay-input" :state="allDayState">
-            <b-form-checkbox
-              class="mx-3"
-              id="allDay-input"
-              v-model="allDay"
-              name="allDay"
-              :state="allDayState"
-              value="true"
-              unchecked-value="false"
-            ></b-form-checkbox>
-          </b-form-group>
-        </form>
-      </b-modal>
+      <b-button pill variant="primary" @click="showAddModal()">Add Event</b-button>
     </div>
+    <b-modal
+      ref="addEventModal"
+      title="Add new event"
+      @ok.prevent="submitFromAddModal()"
+      @show="resetModal()"
+      @hidden="resetModal()"
+    >
+      <AddForm ref="addEventForm" :event="event" />
+    </b-modal>
     <full-calendar ref="calendar" class="full-calendar" :options="config">
       <template #eventContent="{ timeText, event }">
         <b>{{ timeText }}</b>
@@ -70,24 +26,23 @@ import FullCalendar from "@fullcalendar/vue";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import AddForm from "./forms/EventAddForm.vue";
 
 export default {
   data() {
     return {
-      title: "",
-      comment: "",
-      start: "",
-      end: "",
-      allDay: "",
-      titleState: null,
-      commentState: null,
-      startState: null,
-      endState: null,
-      allDayState: null,
+      event: {
+        title: "",
+        comment: "",
+        start: "",
+        end: "",
+        allDay: false,
+      },
     };
   },
   components: {
     FullCalendar,
+    AddForm,
   },
   computed: {
     allEvents() {
@@ -147,51 +102,25 @@ export default {
       // return this.deleteEvent(event.id);
       console.log(event);
     },
-    checkFormValidity() {
-      const valid = this.$refs.form.checkValidity();
-      this.titleState = valid;
-      this.commentState = valid;
-      this.startState = valid;
-      this.allDayState = valid;
-      return valid;
+    showAddModal() {
+      this.$refs.addEventModal.show();
     },
     resetModal() {
-      this.title = "";
-      this.titleState = null;
-      this.comment = "";
-      this.commentState = null;
-      this.start = "";
-      this.startState = null;
-      this.end = "";
-      this.endState = null;
-      this.allDay = "";
-      this.allDayState = null;
+      this.event.title = "";
+      this.event.comment = "";
+      this.event.start = "";
+      this.event.end = "";
+      this.event.allDay = "";
     },
-    handleOk(bvModalEvent) {
-      // Prevent modal from closing
-      bvModalEvent.preventDefault();
-      // Trigger submit handler
-      this.handleSubmit();
-    },
-    handleSubmit() {
-      // Exit when the form isn't valid
-      if (!this.checkFormValidity()) {
-        return;
+    submitFromAddModal() {
+      const data = this.$refs.addEventForm.submit();
+      // console.log(data);
+      if (data) {
+        this.$store.dispatch("event/addEvent", data);
+        this.$nextTick(() => {
+          this.$refs.addEventModal.hide();
+        });
       }
-
-      // submit event through action
-      this.$store.dispatch("event/addEvent", {
-        title: this.title,
-        comment: this.comment,
-        start: this.start,
-        end: this.end,
-        allDay: this.allDay ? 1 : 0,
-      });
-
-      // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide("modal-add-event");
-      });
     },
   },
 };
@@ -203,5 +132,9 @@ export default {
 }
 .fc-daygrid-dot-event span b {
   margin-right: 5px;
+  color: black;
+}
+.fc-daygrid-dot-event span i {
+  color: black;
 }
 </style>
