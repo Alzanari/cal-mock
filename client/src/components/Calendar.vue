@@ -66,6 +66,7 @@ export default {
       currentEvent: null,
       isSidebarOpen: false,
       weekends: true,
+      showBottom: false,
     };
   },
   components: {
@@ -153,7 +154,7 @@ export default {
       if (data) {
         this.$store.dispatch("event/addEvent", data).then((value) => {
           if (value.status !== 200 && value.status !== 401) {
-            this.showTop = true;
+            this.showBottom = true;
           }
         });
         this.$nextTick(() => {
