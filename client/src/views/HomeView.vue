@@ -47,4 +47,9 @@ export default {
 body {
   background-color: whitesmoke;
 }
+button.close {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+}
 </style>

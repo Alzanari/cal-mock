@@ -12,6 +12,26 @@
     >
       <AddForm ref="addEventForm" :event="event" />
     </b-modal>
+    <b-sidebar
+      id="sidebar-right"
+      title="Event"
+      v-model="isSidebarOpen"
+      bg-variant="dark"
+      text-variant="light"
+      right
+      backdrop
+      shadow
+    >
+      <div class="px-3 py-3" v-if="isSidebarOpen">
+        <h3>{{ currentEvent.title }}</h3>
+        <p class="pt-3">
+          Comment: <b>{{ currentEvent.extendedProps.comment }}</b>
+        </p>
+        <p>
+          Status: <b>{{ currentEvent.extendedProps.status }}</b>
+        </p>
+      </div>
+    </b-sidebar>
     <full-calendar ref="calendar" class="full-calendar" :options="config">
       <template #eventContent="{ timeText, event }">
         <b>{{ timeText }}</b>
@@ -38,6 +58,8 @@ export default {
         end: "",
         allDay: false,
       },
+      currentEvent: null,
+      isSidebarOpen: false,
     };
   },
   components: {
@@ -93,14 +115,8 @@ export default {
   },
   methods: {
     onEventClick({ event }) {
-      // const confirmed = confirm(`Are you sure you want to delete the event '${event.title}'?`);
-
-      // if (!confirmed) {
-      //   return;
-      // }
-
-      // return this.deleteEvent(event.id);
-      console.log(event);
+      this.currentEvent = event._def;
+      this.isSidebarOpen = true;
     },
     showAddModal() {
       this.$refs.addEventModal.show();
