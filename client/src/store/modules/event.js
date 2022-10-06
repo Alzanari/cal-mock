@@ -56,7 +56,7 @@ export const event = {
     },
     async addEvent({ dispatch }, event) {
       try {
-        const eve = await axios.post("/event/create", {
+        await axios.post("/event/create", {
           title: event.title,
           comment: event.comment,
           start: event.start,
@@ -64,26 +64,24 @@ export const event = {
           allDay: event.allDay,
         });
         dispatch("fetchEvents");
-        return await Promise.resolve(eve);
       } catch (error) {
         console.error(error);
       }
     },
     async updateStatus({ dispatch }, event) {
       try {
-        const eve = await axios.put("/event/status", {
+        await axios.put("/event/status", {
           id: event.id,
           status: event.status,
         });
         dispatch("fetchEvents");
-        return await Promise.resolve(eve);
       } catch (error) {
         console.error(error);
       }
     },
     async updateEvent({ dispatch }, event) {
       try {
-        const eve = await axios.put("/event/update", {
+        await axios.put("/event/update", {
           id: event.id,
           title: event.title,
           comment: event.comment,
@@ -93,16 +91,14 @@ export const event = {
           status: event.status,
         });
         dispatch("fetchEvents");
-        return await Promise.resolve(eve);
       } catch (error) {
         console.error(error);
       }
     },
     async deleteEvent({ dispatch }, event) {
       try {
-        const eve = await axios.delete("/event/delete", { data: { id: event.id } });
+        await axios.delete("/event/delete", { data: { id: event.id } });
         dispatch("fetchEvents");
-        return await Promise.resolve(eve);
       } catch (error) {
         console.error(error);
       }

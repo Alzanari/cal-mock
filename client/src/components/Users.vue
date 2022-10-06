@@ -1,15 +1,6 @@
 <template>
   <div>
     <h2 class="my-2">Liste des utilisateurs</h2>
-    <b-alert
-      v-model="showBottom"
-      class="position-fixed fixed-bottom m-0 rounded-0"
-      style="z-index: 2000"
-      variant="warning"
-      dismissible
-    >
-      L'action n'a pas réussi
-    </b-alert>
     <b-row>
       <b-col class="my-2">
         <b-button pill variant="outline-secondary" @click="showAddModal()">Ajouter un utilisateur</b-button>
@@ -132,7 +123,6 @@ export default {
       currentPage: 1,
       currentUser: null,
       selected: [],
-      showBottom: false,
     };
   },
   computed: {
@@ -197,11 +187,7 @@ export default {
       const data = this.$refs.addUserForm.submit();
       // console.log(data);
       if (data) {
-        this.$store.dispatch("user/addUser", data).then((value) => {
-          if (value.status !== 200 && value.status !== 401) {
-            this.showBottom = true;
-          }
-        });
+        this.$store.dispatch("user/addUser", data);
         this.$nextTick(() => {
           this.$refs.addUserModal.hide();
         });
@@ -210,11 +196,7 @@ export default {
     submitFromPassModal() {
       const data = this.$refs.editPassForm.submit();
       if (data) {
-        this.$store.dispatch("user/updatePassword", data).then((value) => {
-          if (value.status !== 200 && value.status !== 401) {
-            this.showBottom = true;
-          }
-        });
+        this.$store.dispatch("user/updatePassword", data);
         this.$nextTick(() => {
           this.$refs.editPassModal.hide();
         });
@@ -223,11 +205,7 @@ export default {
     submitFromEditModal() {
       const data = this.$refs.editUserForm.submit();
       if (data) {
-        this.$store.dispatch("user/updateUser", data).then((value) => {
-          if (value.status !== 200 && value.status !== 401) {
-            this.showBottom = true;
-          }
-        });
+        this.$store.dispatch("user/updateUser", data);
         this.$nextTick(() => {
           this.$refs.editUserModal.hide();
         });
@@ -236,11 +214,7 @@ export default {
     submitFromDeleteModal() {
       const data = this.$refs.deleteUserForm.submit();
       if (data) {
-        this.$store.dispatch("user/deleteUser", data).then((value) => {
-          if (value.status !== 200 && value.status !== 401) {
-            this.showBottom = true;
-          }
-        });
+        this.$store.dispatch("user/deleteUser", data);
         this.$nextTick(() => {
           this.$refs.deleteUserModal.hide();
         });
@@ -249,11 +223,7 @@ export default {
     globalAction(elementId) {
       if (elementId === "deleteAll") {
         this.selected.forEach((select) => {
-          this.$store.dispatch("user/deleteUser", select).then((value) => {
-            if (value.status !== 200 && value.status !== 401) {
-              this.showBottom = true;
-            }
-          });
+          this.$store.dispatch("user/deleteUser", select);
           this.selected = [];
           this.$refs.userTableAdmin.clearSelected();
         });

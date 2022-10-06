@@ -66,7 +66,6 @@ export default {
       currentEvent: null,
       isSidebarOpen: false,
       weekends: true,
-      showBottom: false,
     };
   },
   components: {
@@ -152,11 +151,7 @@ export default {
       const data = this.$refs.addEventForm.submit();
       // console.log(data);
       if (data) {
-        this.$store.dispatch("event/addEvent", data).then((value) => {
-          if (value.status !== 200 && value.status !== 401) {
-            this.showBottom = true;
-          }
-        });
+        this.$store.dispatch("event/addEvent", data);
         this.$nextTick(() => {
           this.$refs.addEventModal.hide();
         });
