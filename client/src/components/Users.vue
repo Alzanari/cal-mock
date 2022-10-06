@@ -116,7 +116,7 @@ export default {
   },
   data() {
     return {
-      fields: ["sélection", "id", "username", "email", "admin", "permissions", "actions"],
+      fields: ["select", "id", "username", "email", "admin", "permissions", "actions"],
       headVariant: "dark",
       filter: "",
       perPage: 10,
