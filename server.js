@@ -9,7 +9,7 @@ const cron = require("node-cron");
 const send = require("./views/mail");
 
 // enable express to do Cross-origin resource sharing
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:8080" }));
 
 // parse requests of content-type - application/json
 app.use(express.json());
