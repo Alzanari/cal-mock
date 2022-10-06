@@ -1,5 +1,6 @@
 <template>
   <b-container fluid :class="{ otherColor: isLoggingIn }" style="height: 100%">
+    <notifications class="m-2" />
     <router-view></router-view>
   </b-container>
 </template>

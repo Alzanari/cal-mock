@@ -1,6 +1,8 @@
+import Vue from "vue";
 import axios from "axios";
 import moment from "moment";
 
+const instance = new Vue({});
 const initialState = {
   events: [],
   weekendsVisible: true,
@@ -56,49 +58,125 @@ export const event = {
     },
     async addEvent({ dispatch }, event) {
       try {
-        await axios.post("/event/create", {
-          title: event.title,
-          comment: event.comment,
-          start: event.start,
-          end: event.end,
-          allDay: event.allDay,
-        });
-        dispatch("fetchEvents");
+        await axios
+          .post("/event/create", {
+            title: event.title,
+            comment: event.comment,
+            start: event.start,
+            end: event.end,
+            allDay: event.allDay,
+          })
+          .then((res) => {
+            if (res.status == 200) {
+              instance.$notify({
+                title: "Important message",
+                text: res.data.message,
+                type: "success",
+              });
+              dispatch("fetchEvents");
+            }
+          })
+          .catch((err) => {
+            if (err.status !== 401) {
+              instance.$notify({
+                title: "Important message",
+                text: err,
+                type: "error",
+              });
+            }
+          });
       } catch (error) {
         console.error(error);
       }
     },
     async updateStatus({ dispatch }, event) {
       try {
-        await axios.put("/event/status", {
-          id: event.id,
-          status: event.status,
-        });
-        dispatch("fetchEvents");
+        await axios
+          .put("/event/status", {
+            id: event.id,
+            status: event.status,
+          })
+          .then((res) => {
+            if (res.status == 200) {
+              instance.$notify({
+                title: "Important message",
+                text: res.data.message,
+                type: "success",
+              });
+            }
+            dispatch("fetchEvents");
+          })
+          .catch((err) => {
+            if (err.status !== 401) {
+              instance.$notify({
+                title: "Important message",
+                text: err,
+                type: "error",
+              });
+            }
+          });
       } catch (error) {
         console.error(error);
       }
     },
     async updateEvent({ dispatch }, event) {
       try {
-        await axios.put("/event/update", {
-          id: event.id,
-          title: event.title,
-          comment: event.comment,
-          start: event.start,
-          end: event.end,
-          allDay: event.allDay,
-          status: event.status,
-        });
-        dispatch("fetchEvents");
+        await axios
+          .put("/event/update", {
+            id: event.id,
+            title: event.title,
+            comment: event.comment,
+            start: event.start,
+            end: event.end,
+            allDay: event.allDay,
+            status: event.status,
+          })
+          .then((res) => {
+            if (res.status == 200) {
+              instance.$notify({
+                title: "Important message",
+                text: res.data.message,
+                type: "success",
+              });
+            }
+            dispatch("fetchEvents");
+          })
+          .catch((err) => {
+            if (err.status !== 401) {
+              instance.$notify({
+                title: "Important message",
+                text: err,
+                type: "error",
+              });
+            }
+          });
       } catch (error) {
         console.error(error);
       }
     },
     async deleteEvent({ dispatch }, event) {
       try {
-        await axios.delete("/event/delete", { data: { id: event.id } });
-        dispatch("fetchEvents");
+        await axios
+          .delete("/event/delete", { data: { id: event.id } })
+          .then((res) => {
+            if (res.status == 200) {
+              instance.$notify({
+                title: "Important message",
+                text: res.data.message,
+                type: "success",
+              });
+            }
+            dispatch("fetchEvents");
+          })
+          .catch((err) => {
+            if (err.status !== 401) {
+              instance.$notify({
+                title: "Important message",
+                text: err,
+                type: "error",
+              });
+            }
+          });
       } catch (error) {
         console.error(error);
       }
