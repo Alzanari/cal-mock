@@ -11,6 +11,7 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "title": {
+                    "allowNull": false,
                     "field": "title",
                     "seqType": "Sequelize.STRING"
                 },
@@ -19,6 +20,7 @@
                     "seqType": "Sequelize.STRING"
                 },
                 "start": {
+                    "allowNull": false,
                     "field": "start",
                     "seqType": "Sequelize.DATE"
                 },
@@ -121,6 +123,7 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "name": {
+                    "allowNull": false,
                     "field": "name",
                     "seqType": "Sequelize.STRING"
                 }
@@ -138,14 +141,19 @@
                     "seqType": "Sequelize.INTEGER"
                 },
                 "username": {
+                    "allowNull": false,
+                    "unique": true,
                     "field": "username",
                     "seqType": "Sequelize.STRING"
                 },
                 "email": {
+                    "allowNull": false,
+                    "unique": true,
                     "field": "email",
                     "seqType": "Sequelize.STRING"
                 },
                 "password": {
+                    "allowNull": false,
                     "field": "password",
                     "seqType": "Sequelize.STRING"
                 },

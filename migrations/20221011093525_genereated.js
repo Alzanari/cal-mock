@@ -14,7 +14,7 @@ const Sequelize = require("sequelize");
 const info = {
   revision: 1,
   name: "genereated",
-  created: "2022-09-29T15:57:58.775Z",
+  created: "2022-10-11T09:35:25.727Z",
   comment: "",
 };
 
@@ -31,7 +31,7 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        name: { type: Sequelize.STRING, field: "name" },
+        name: { type: Sequelize.STRING, field: "name", allowNull: false },
       },
       { transaction },
     ],
@@ -48,9 +48,23 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        username: { type: Sequelize.STRING, field: "username" },
-        email: { type: Sequelize.STRING, field: "email" },
-        password: { type: Sequelize.STRING, field: "password" },
+        username: {
+          type: Sequelize.STRING,
+          field: "username",
+          unique: true,
+          allowNull: false,
+        },
+        email: {
+          type: Sequelize.STRING,
+          field: "email",
+          unique: true,
+          allowNull: false,
+        },
+        password: {
+          type: Sequelize.STRING,
+          field: "password",
+          allowNull: false,
+        },
         createdAt: {
           type: Sequelize.DATE,
           field: "createdAt",
@@ -77,9 +91,9 @@ const migrationCommands = (transaction) => [
           primaryKey: true,
           allowNull: false,
         },
-        title: { type: Sequelize.STRING, field: "title" },
+        title: { type: Sequelize.STRING, field: "title", allowNull: false },
         comment: { type: Sequelize.STRING, field: "comment" },
-        start: { type: Sequelize.DATE, field: "start" },
+        start: { type: Sequelize.DATE, field: "start", allowNull: false },
         end: { type: Sequelize.DATE, field: "end" },
         allDay: { type: Sequelize.TINYINT, field: "allDay" },
         status: {

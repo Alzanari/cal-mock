@@ -14,9 +14,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   Event.init(
     {
-      title: DataTypes.STRING,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       comment: DataTypes.STRING,
-      start: DataTypes.DATE,
+      start: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       end: DataTypes.DATE,
       allDay: DataTypes.TINYINT,
       status: {
